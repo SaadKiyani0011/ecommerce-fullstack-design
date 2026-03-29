@@ -3,20 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Details</title>
-    <!-- We link our global CSS to get the theme, animations, and header styling -->
+    <title>Product Details - Ecommerce</title>
+    <!-- Include home.css for common header/nav styles -->
     <link rel="stylesheet" href="assets/css/home.css">
+    <link rel="stylesheet" href="assets/css/listing.css"> <!-- For breadcrumbs/general -->
     <link rel="stylesheet" href="assets/css/details.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="light-theme">
 
-    <!-- 1. HEADER (Reused from Home) -->
+    <!-- 1. HEADER (Logo, Search, User Quick Links) -->
     <header class="top-header">
         <a href="home.html" class="logo-container" style="text-decoration: none;">
-            <img src="logo-placeholder.png" alt="Brand Logo" class="brand-logo">
+            <div style="width: 40px; height: 40px; background: #3b82f6; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 20px;">B</div>
             <span class="brand-name">Brand</span>
         </a>
-        
+
         <div class="search-container">
             <input class="search-input" type="text" placeholder="Search">
             <select class="category-select">
@@ -24,13 +26,15 @@
             </select>
             <button class="search-btn">Search</button>
         </div>
-        
+
         <div class="header-actions">
+            <!-- Theme Toggle -->
             <button id="theme-toggle" class="theme-toggle-btn">🌙 Dark Mode</button>
-            <div class="action-item">
+            
+            <a href="login.html" class="action-item" style="text-decoration: none; color: inherit;">
                 <span class="icon">👤</span>
                 <span class="label">Profile</span>
-            </div>
+            </a>
             <div class="action-item">
                 <span class="icon">💬</span>
                 <span class="label">Message</span>
@@ -52,7 +56,7 @@
             <li><button class="all-category-btn">≡ Menu</button></li>
             <li><a href="home.html">Home</a></li>
             <li><a href="listing.html">Product Listing</a></li>
-            <li><a href="details.html">Product Details</a></li>
+            <li><a href="details.html" style="font-weight: bold; color: var(--primary-color);">Product Details</a></li>
             <li><a href="cart.html">Cart</a></li>
         </ul>
         <div class="nav-preferences">
@@ -61,170 +65,106 @@
         </div>
     </nav>
 
-    <!-- 3. MAIN PRODUCT DETAILS -->
-    <main class="details-page">
-        <!-- Breadcrumbs -->
-        <div class="breadcrumbs">
-            <a href="home.html">Home</a> > <a href="listing.html">Electronics</a> > <span>Cameras</span> > <span class="current">GoPro HERO6 4K</span>
+    <main class="details-main" id="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb" style="margin-bottom: 30px;">
+            <a href="home.html">Home</a> <span class="divider">></span> 
+            <a href="listing.html" id="bc-category">Category</a> <span class="divider">></span> 
+            <span id="bc-title" style="color: var(--text-color); font-weight: 500;">Product</span>
         </div>
 
-        <section class="product-main-card">
-            <!-- Left: Images Gallery -->
-            <div class="product-gallery">
-                <div class="main-image">
-                    <img src="camera-main.png" alt="Product Main Image">
+        <!-- 50/50 CSS Grid Layout -->
+        <div class="product-split">
+            
+            <!-- Left: Image Gallery -->
+            <div class="gallery-section">
+                <div class="main-image-wrapper">
+                    <img id="main-img" src="" alt="Product">
                 </div>
-                <div class="thumbnail-list">
-                    <img src="thumb1.png" alt="Thumb 1" class="thumb active">
-                    <img src="thumb2.png" alt="Thumb 2" class="thumb">
-                    <img src="thumb3.png" alt="Thumb 3" class="thumb">
-                    <img src="thumb4.png" alt="Thumb 4" class="thumb">
-                    <img src="thumb5.png" alt="Thumb 5" class="thumb">
+                <div class="thumbnail-row" id="thumbnail-row">
+                    <!-- Thumbnails populated by JS -->
                 </div>
             </div>
 
-            <!-- Right: Product Info -->
-            <div class="product-info-details">
-                <div class="product-status">
-                    <span class="in-stock-badge">✓ In stock</span>
-                </div>
-                <h1 class="product-title">GoPro HERO6 4K Action Camera - Black</h1>
+            <!-- Right: Product Information -->
+            <div class="info-section">
+                <!-- Status tag -->
+                <div class="stock-status">✓ IN STOCK</div>
                 
-                <div class="product-meta">
-                    <span class="stars">⭐⭐⭐⭐</span>
-                    <span class="rating-number">9.3</span>
-                    <span class="meta-dot">•</span>
-                    <span class="reviews-count">32 reviews</span>
-                    <span class="meta-dot">•</span>
-                    <span class="sold-count">154 sold</span>
+                <h1 class="product-title" id="product-title">Loading Product...</h1>
+                
+                <div class="rating-row">
+                    <span class="stars">★★★★★</span>
+                    <span class="rating-score" id="product-rating">4.5</span>
+                    <span class="reviews-count" id="product-reviews">(0 reviews)</span>
+                </div>
+                
+                <div class="price-row">
+                    <span class="current-price" id="product-price">$0.00</span>
+                    <span class="old-price" id="product-old-price"></span>
                 </div>
 
-                <div class="pricing-tier">
-                    <div class="price-box">
-                        <span class="price-value">$98.00</span>
-                        <span class="price-condition">50-100 pcs</span>
-                    </div>
-                    <div class="price-box">
-                        <span class="price-value">$90.00</span>
-                        <span class="price-condition">100-700 pcs</span>
-                    </div>
-                    <div class="price-box">
-                        <span class="price-value">$78.00</span>
-                        <span class="price-condition">700+ pcs</span>
-                    </div>
-                </div>
+                <p class="product-description" id="product-desc">
+                    Product description will appear here securely fetched from the database based on the selected ID in the listing.
+                </p>
 
-                <div class="product-attributes">
-                    <div class="attribute-row">
-                        <span class="attr-label">Price:</span>
-                        <span class="attr-value">Negotiable</span>
-                    </div>
-                    <hr>
-                    <div class="attribute-row">
-                        <span class="attr-label">Color:</span>
-                        <span class="attr-value">
-                            <button class="color-btn selected" style="background-color: black;"></button>
-                            <button class="color-btn" style="background-color: darkgray;"></button>
-                            <button class="color-btn" style="background-color: silver;"></button>
-                        </span>
-                    </div>
-                    <div class="attribute-row">
-                        <span class="attr-label">Type:</span>
-                        <span class="attr-value">
-                            <button class="type-btn active">Classic</button>
-                            <button class="type-btn">Modern</button>
-                        </span>
-                    </div>
-                    <div class="attribute-row">
-                        <span class="attr-label">Quantity:</span>
-                        <span class="attr-value">
-                            <div class="quantity-selector">
-                                <button class="qty-btn minus">-</button>
-                                <input type="number" value="1" min="1" class="qty-input">
-                                <button class="qty-btn plus">+</button>
-                            </div>
-                        </span>
+                <hr class="divider">
+
+                <!-- Dynamic Variant Selectors -->
+                <div class="variant-area">
+                    <div class="variant-label">Colors:</div>
+                    <div class="color-options" id="color-options">
+                        <!-- Populated completely by JS depending on DB colors array -->
                     </div>
                 </div>
 
-                <div class="action-buttons">
-                    <button class="buy-now-btn">Buy now</button>
-                    <button class="add-to-cart-btn">Add to Cart</button>
-                    <button class="save-later-btn">♡ Save for later</button>
+                <div class="variant-area">
+                    <div class="variant-label">Options/Sizes:</div>
+                    <div class="size-options" id="size-options">
+                        <!-- Populated by JS -->
+                    </div>
                 </div>
 
-                <!-- Seller info block on the right -->
-                <div class="supplier-info">
-                    <div class="supplier-header">
-                        <div class="supplier-logo">G</div>
-                        <div class="supplier-name">
-                            <p>Global Supplier Inc.</p>
-                            <span class="country">🇩🇪 Germany</span>
-                        </div>
+                <hr class="divider">
+
+                <!-- Action Button Row -->
+                <div class="action-row">
+                    <div class="quantity-picker">
+                        <button id="qty-minus">-</button>
+                        <input type="text" id="qty-input" value="1" readonly>
+                        <button id="qty-plus">+</button>
                     </div>
-                    <div class="supplier-stats">
-                        <p>✓ Verified Seller</p>
-                        <p>✓ Worldwide shipping</p>
-                    </div>
-                    <button class="supplier-contact-btn">Send message to seller</button>
+
+                    <button class="add-to-cart-btn" id="add-cart">Add to cart</button>
+                    <button class="wishlist-btn" title="Save for later">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    </button>
+                </div>
+                
+                <!-- Extra meta info like shipping -->
+                <div class="store-meta">
+                    <div class="meta-item">🏙️ Ships from Germany store</div>
+                    <div class="meta-item">🛡️ 1 Year Brand Warranty</div>
                 </div>
             </div>
-        </section>
-
-        <!-- 4. BOTTOM TABS (Description, Reviews) AND RELATED ITEMS -->
-        <div class="bottom-details-layout">
-            <section class="description-section">
-                <!-- Navigation Tabs -->
-                <div class="tabs">
-                    <button class="tab-btn active">Description</button>
-                    <button class="tab-btn">Reviews</button>
-                    <button class="tab-btn">Shipping</button>
-                    <button class="tab-btn">About company</button>
-                </div>
-                
-                <div class="tab-content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                    <br>
-                    <ul class="features-list">
-                        <li><span>✔</span> Premium quality material</li>
-                        <li><span>✔</span> Long-lasting battery life</li>
-                        <li><span>✔</span> Waterproof up to 50 meters</li>
-                        <li><span>✔</span> High definition 4K recording</li>
-                    </ul>
-                </div>
-            </section>
-
-            <aside class="related-products">
-                <h3>You may like</h3>
-                <div class="related-list">
-                    <div class="related-item">
-                        <img src="related1.png" alt="Related">
-                        <div>
-                            <p class="title">Apple Watch Series Space Grey</p>
-                            <p class="price">$7.00 - $99.50</p>
-                        </div>
-                    </div>
-                    <div class="related-item">
-                        <img src="related2.png" alt="Related">
-                        <div>
-                            <p class="title">Mens winter leathers jackets</p>
-                            <p class="price">$32.00 - $40.00</p>
-                        </div>
-                    </div>
-                    <div class="related-item">
-                        <img src="related3.png" alt="Related">
-                        <div>
-                            <p class="title">T-shirts with multiple colors</p>
-                            <p class="price">$12.00</p>
-                        </div>
-                    </div>
-                </div>
-            </aside>
         </div>
+        
+        <!-- Bottom Information Tabs -->
+        <div class="product-tabs-section">
+            <div class="tabs-header">
+                <button class="tab-btn active">Description</button>
+                <button class="tab-btn">Reviews</button>
+                <button class="tab-btn">Shipping</button>
+            </div>
+            <div class="tab-content" style="padding: 25px;">
+                <p id="full-description" style="line-height: 1.6; color: var(--secondary-text);">Complete details will load here...</p>
+            </div>
+        </div>
+
     </main>
 
-    <!-- Essential Javascript for Global features like Page Transitions, Dark Mode Toggle -->
-    <script src="assets/js/home.js"></script>
+    <!-- Essential Scripts -->
+    <script src="assets/js/db.js"></script>
     <script src="assets/js/details.js"></script>
 </body>
 </html>
