@@ -68,24 +68,25 @@
         <section class="hero-section">
             <!-- Left Sidebar -->
             <aside class="sidebar-categories">
-                <ul>
-                    <li class="active"><a href="listing.html">Automobiles</a></li>
-                    <li><a href="#">Clothes and wear</a></li>
-                    <li><a href="#">Home interiors</a></li>
-                    <li><a href="#">Computer and tech</a></li>
-                    <li><a href="#">Tools, equipments</a></li>
-                    <li><a href="#">Sports and outdoor</a></li>
-                    <li><a href="#">Animal and pets</a></li>
-                    <li><a href="#">Machinery tools</a></li>
-                    <li><a href="#">More category</a></li>
+                <ul id="category-list">
+                    <li class="active" data-id="automobiles"><a href="#">Automobiles</a></li>
+                    <li data-id="clothes"><a href="#">Clothes and wear</a></li>
+                    <li data-id="home"><a href="#">Home interiors</a></li>
+                    <li data-id="tech"><a href="#">Computer and tech</a></li>
+                    <li data-id="tools"><a href="#">Tools, equipments</a></li>
+                    <li data-id="sports"><a href="#">Sports and outdoor</a></li>
+                    <li data-id="animals"><a href="#">Animal and pets</a></li>
+                    <li data-id="machinery"><a href="#">Machinery tools</a></li>
+                    <li data-id="more"><a href="#">More category</a></li>
                 </ul>
             </aside>
 
             <!-- Center Banner -->
-            <div class="hero-banner">
+            <div class="hero-banner" id="main-hero-banner">
+                <img id="banner-img" src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800&q=80" alt="Hero Banner">
+                <div class="banner-overlay"></div>
                 <div class="banner-content">
-                    <h2>Latest trending<br>Electronic items</h2>
-                    <button class="learn-more-btn">Learn more</button>
+                    <h2 id="banner-title">Latest trending<br>Automobiles</h2>
                 </div>
             </div>
 
