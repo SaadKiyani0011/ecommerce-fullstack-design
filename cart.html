@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <!-- Link our global CSS and specific cart CSS -->
+    <link rel="stylesheet" href="assets/css/home.css">
+    <link rel="stylesheet" href="assets/css/cart.css">
+</head>
+<body>
+
+    <!-- 1. HEADER (Reused from Home) -->
+    <header class="top-header">
+        <a href="home.html" class="logo-container" style="text-decoration: none;">
+            <img src="logo-placeholder.png" alt="Brand Logo" class="brand-logo">
+            <span class="brand-name">Brand</span>
+        </a>
+        
+        <div class="search-container">
+            <input class="search-input" type="text" placeholder="Search">
+            <select class="category-select">
+                <option value="all">All category</option>
+            </select>
+            <button class="search-btn">Search</button>
+        </div>
+        
+        <div class="header-actions">
+            <!-- Theme Toggle -->
+            <button id="theme-toggle" class="theme-toggle-btn">🌙 Dark Mode</button>
+            <div class="action-item">
+                <span class="icon">👤</span>
+                <span class="label">Profile</span>
+            </div>
+            <div class="action-item">
+                <span class="icon">💬</span>
+                <span class="label">Message</span>
+            </div>
+            <div class="action-item">
+                <span class="icon">❤️</span>
+                <span class="label">Orders</span>
+            </div>
+            <div class="action-item">
+                <span class="icon">🛒</span>
+                <span class="label">My cart</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. MAIN NAVIGATION -->
+    <nav class="main-nav">
+        <ul class="nav-links">
+            <li><button class="all-category-btn">≡ Menu</button></li>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="listing.html">Product Listing</a></li>
+            <li><a href="details.html">Product Details</a></li>
+            <li><a href="cart.html">Cart</a></li>
+        </ul>
+        <div class="nav-preferences">
+            <span>English, USD ▾</span>
+            <span>Ship to 🇩🇪 ▾</span>
+        </div>
+    </nav>
+
+    <!-- 3. CART CONTENT -->
+    <main class="cart-page">
+        <h2 class="page-title">My cart (3)</h2>
+        
+        <div class="cart-layout">
+            <!-- Left: Items list -->
+            <section class="cart-items-section">
+                <!-- Item 1 -->
+                <div class="cart-item">
+                    <img src="camera-main.png" alt="Product" class="item-img">
+                    <div class="item-details">
+                        <h4 class="item-name">GoPro HERO6 4K Action Camera - Black</h4>
+                        <p class="item-specs">Color: Black, Type: Classic</p>
+                        <div class="item-actions">
+                            <button class="action-btn text-danger remove-btn">Remove</button>
+                            <button class="action-btn text-primary">Save for later</button>
+                        </div>
+                    </div>
+                    <div class="item-price-qty">
+                        <span class="price">$98.00</span>
+                        <div class="quantity-selector">
+                            <button class="qty-btn minus">-</button>
+                            <input type="number" value="1" min="1" class="qty-input">
+                            <button class="qty-btn plus">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="cart-item">
+                    <img src="phone-listing1.png" alt="Product" class="item-img">
+                    <div class="item-details">
+                        <h4 class="item-name">Iphone 12 Pro Max - Blue Color</h4>
+                        <p class="item-specs">Color: Blue, Storage: 256GB</p>
+                        <div class="item-actions">
+                            <button class="action-btn text-danger remove-btn">Remove</button>
+                            <button class="action-btn text-primary">Save for later</button>
+                        </div>
+                    </div>
+                    <div class="item-price-qty">
+                        <span class="price">$999.00</span>
+                        <div class="quantity-selector">
+                            <button class="qty-btn minus">-</button>
+                            <input type="number" value="1" min="1" class="qty-input">
+                            <button class="qty-btn plus">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="cart-item">
+                    <img src="laptop-listing.png" alt="Product" class="item-img">
+                    <div class="item-details">
+                        <h4 class="item-name">MacBook Pro M1 8GB Ram</h4>
+                        <p class="item-specs">Color: Space Grey</p>
+                        <div class="item-actions">
+                            <button class="action-btn text-danger remove-btn">Remove</button>
+                            <button class="action-btn text-primary">Save for later</button>
+                        </div>
+                    </div>
+                    <div class="item-price-qty">
+                        <span class="price">$1199.00</span>
+                        <div class="quantity-selector">
+                            <button class="qty-btn minus">-</button>
+                            <input type="number" value="1" min="1" class="qty-input">
+                            <button class="qty-btn plus">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cart-footer-actions">
+                    <button class="back-shop-btn" onclick="window.location.href='listing.html'">← Back to shop</button>
+                    <button class="remove-all-btn">Remove all</button>
+                </div>
+            </section>
+
+            <!-- Right: Checkout Sidebar -->
+            <aside class="checkout-sidebar">
+                <div class="coupon-box">
+                    <p>Have a coupon?</p>
+                    <div class="coupon-input">
+                        <input type="text" placeholder="Add coupon">
+                        <button>Apply</button>
+                    </div>
+                </div>
+
+                <div class="summary-box">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span class="subtotal-val">$2296.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Discount:</span>
+                        <span class="discount-val text-danger">- $60.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax:</span>
+                        <span class="tax-val text-success">+ $14.00</span>
+                    </div>
+                    <hr>
+                    <div class="summary-row total-row">
+                        <span>Total:</span>
+                        <span class="total-val">$2250.00</span>
+                    </div>
+                    <button class="checkout-btn">Checkout</button>
+                    
+                    <div class="payment-methods">
+                        <img src="payment-icons-placeholder.png" alt="Payments Accepted">
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- 4. SAVED FOR LATER SELECTION -->
+        <section class="saved-items-block">
+            <h3>Saved for later</h3>
+            <div class="saved-grid">
+                <div class="saved-card">
+                    <img src="watch-listing.png" alt="Product">
+                    <p class="price">$99.50</p>
+                    <p class="title">Apple Watch Series 6</p>
+                    <button class="move-cart-btn">🛒 Move to cart</button>
+                </div>
+                <!-- Duplicate cards for layout -->
+                <div class="saved-card">
+                    <img src="airpods-listing.png" alt="Product">
+                    <p class="price">$199.00</p>
+                    <p class="title">AirPods Pro Active Noise Cancelling</p>
+                    <button class="move-cart-btn">🛒 Move to cart</button>
+                </div>
+                <div class="saved-card">
+                    <img src="related1.png" alt="Product">
+                    <p class="price">$7.99</p>
+                    <p class="title">Mens Leather Wallets</p>
+                    <button class="move-cart-btn">🛒 Move to cart</button>
+                </div>
+                <div class="saved-card">
+                    <img src="related3.png" alt="Product">
+                    <p class="price">$12.00</p>
+                    <p class="title">T-shirts multi-color</p>
+                    <button class="move-cart-btn">🛒 Move to cart</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Essential Javascript for Global features like Page Transitions, Dark Mode Toggle -->
+    <script src="assets/js/home.js"></script>
+    <script src="assets/js/cart.js"></script>
+</body>
+</html>
