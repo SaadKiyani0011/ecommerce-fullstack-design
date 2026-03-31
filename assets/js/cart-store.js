@@ -85,3 +85,34 @@ const CartStore = {
         }
     }
 };
+
+// ==== GLOBAL AUTHENTICATION UI UPDATE ====
+document.addEventListener('DOMContentLoaded', () => {
+    try {
+        const userData = localStorage.getItem('ecommerce_user');
+        if (userData) {
+            const user = JSON.parse(userData);
+            // Find the Profile label across any page
+            const actionItems = document.querySelectorAll('.action-item');
+            actionItems.forEach(item => {
+                const icon = item.querySelector('.icon');
+                const label = item.querySelector('.label');
+                if (icon && icon.textContent.includes('👤') && label) {
+                    // Change Profile -> Hi, FirstName
+                    label.textContent = `Hi, ${user.name.split(' ')[0]}`;
+                    
+                    // Modify click to act as a logout
+                    item.href = "#";
+                    // Using a wrapper to avoid interfering with previously bound events
+                    item.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if (confirm(`Logged in as ${user.email}.\nDo you want to log out?`)) {
+                            localStorage.removeItem('ecommerce_user');
+                            window.location.reload();
+                        }
+                    });
+                }
+            });
+        }
+    } catch (e) { console.error("Auth check failed:", e); }
+});

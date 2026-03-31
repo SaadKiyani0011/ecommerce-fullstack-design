@@ -20,7 +20,7 @@
     <div class="container" id="container">
         <!-- Sign Up Area -->
         <div class="form-container sign-up-container">
-            <form action="#">
+            <form id="signUpForm" action="#">
                 <div class="form-header">
                     <h1>Create Account</h1>
                     <p>Enter your details below to create your account and start shopping.</p>
@@ -28,28 +28,28 @@
                 
                 <div class="input-group">
                     <label>Full Name</label>
-                    <input type="text" placeholder="John Doe" required />
+                    <input type="text" id="signup-name" placeholder="John Doe" required />
                 </div>
 
                 <div class="input-group">
                     <label>Username (Email)</label>
-                    <input type="email" placeholder="your-email@gmail.com" required />
+                    <input type="email" id="signup-email" placeholder="your-email@gmail.com" required />
                 </div>
                 
                 <div class="input-group">
                     <label>Password</label>
-                    <input type="password" placeholder="Create Password" required />
+                    <input type="password" id="signup-password" placeholder="Create Password" required />
                 </div>
                 
-                <div style="margin-bottom: 25px;"></div>
+                <div id="signup-msg" style="margin-bottom: 15px; font-size: 13px;"></div>
                 
-                <button type="button" class="action-btn">Sign Up</button>
+                <button type="submit" class="action-btn">Sign Up</button>
             </form>
         </div>
         
         <!-- Sign In Area (Matches the provided screenshot design) -->
         <div class="form-container sign-in-container">
-            <form action="#">
+            <form id="signInForm" action="#">
                 <div class="form-header">
                     <h1>Login</h1>
                     <p>Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
@@ -57,12 +57,12 @@
                 
                 <div class="input-group">
                     <label>Username</label>
-                    <input type="email" placeholder="your-email@gmail.com" required />
+                    <input type="email" id="signin-email" placeholder="your-email@gmail.com" required />
                 </div>
                 
                 <div class="input-group">
                     <label>Password</label>
-                    <input type="password" placeholder="Your Password" required />
+                    <input type="password" id="signin-password" placeholder="Your Password" required />
                 </div>
                 
                 <div class="form-options">
@@ -72,7 +72,9 @@
                     <a href="#" class="forgot-pwd">Forgot Password</a>
                 </div>
                 
-                <button type="button" class="action-btn">Log In</button>
+                <div id="signin-msg" style="margin-bottom: 15px; font-size: 13px;"></div>
+
+                <button type="submit" class="action-btn">Log In</button>
             </form>
         </div>
 
