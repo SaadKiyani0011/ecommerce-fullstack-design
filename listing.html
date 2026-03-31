@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products Listing - Ecommerce</title>
+    <title>Products Listing - KIYANI</title>
     <!-- Include home.css for common header/nav styles -->
     <link rel="stylesheet" href="assets/css/home.css">
     <!-- Include listing specific styles -->
@@ -11,13 +12,15 @@
     <link rel="stylesheet" href="assets/css/footer.css">
     <!-- Using Google Fonts matching home -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="assets/Logo/LOGO.png" type="image/x-icon">
 </head>
+
 <body class="light-theme">
 
     <!-- 1. HEADER (Logo, Search, User Quick Links) -->
     <header class="top-header">
         <a href="home.html" class="logo-container" style="text-decoration: none;">
-            <div style="width: 40px; height: 40px; background: #3b82f6; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 20px;">B</div>
+            <img src="assets/Logo/LOGO.png" alt="Brand Logo" class="brand-logo">
             <span class="brand-name">Brand</span>
         </a>
 
@@ -32,7 +35,7 @@
         <div class="header-actions">
             <!-- Theme Toggle -->
             <button id="theme-toggle" class="theme-toggle-btn">🌙 Dark Mode</button>
-            
+
             <a href="login.html" class="action-item">
                 <span class="icon">👤</span>
                 <span class="label">Profile</span>
@@ -70,13 +73,14 @@
 
     <!-- 3. LISTING MAIN CONTENT -->
     <main class="listing-main">
-        
+
         <!-- Top Bar (Breadcrumb & Category Switcher Demo) -->
         <div class="listing-top-bar">
             <div class="breadcrumb">
-                <a href="home.html">Home</a> <span class="divider">></span> <span id="breadcrumb-category">Electronics & Tech</span>
+                <a href="home.html">Home</a> <span class="divider">></span> <span id="breadcrumb-category">Electronics &
+                    Tech</span>
             </div>
-            
+
             <div class="category-tabs" id="category-tabs">
                 <button class="cat-btn active" data-cat="electronics">Electronics</button>
                 <button class="cat-btn" data-cat="automobile">Automobiles</button>
@@ -88,7 +92,7 @@
         <div class="listing-layout">
             <!-- Left Sidebar: Filters -->
             <aside class="filter-sidebar">
-                
+
                 <div class="filter-group">
                     <h4>Brands</h4>
                     <div id="filter-brands" class="filter-options">
@@ -107,19 +111,19 @@
                     <h4>Price Range</h4>
                     <div class="filter-options">
                         <label class="custom-radio">
-                            <input type="radio" name="price" value="all" checked> 
+                            <input type="radio" name="price" value="all" checked>
                             <span>All Prices</span>
                         </label>
                         <label class="custom-radio">
-                            <input type="radio" name="price" value="under50"> 
+                            <input type="radio" name="price" value="under50">
                             <span>Under $50</span>
                         </label>
                         <label class="custom-radio">
-                            <input type="radio" name="price" value="50-200"> 
+                            <input type="radio" name="price" value="50-200">
                             <span>$50 - $200</span>
                         </label>
                         <label class="custom-radio">
-                            <input type="radio" name="price" value="over200"> 
+                            <input type="radio" name="price" value="over200">
                             <span>Over $200</span>
                         </label>
                     </div>
@@ -179,7 +183,8 @@
                     <div class="footer-logo-icon">B</div>
                     <span class="footer-brand-name">Brand</span>
                 </a>
-                <p>Your one-stop destination for electronics, fashion, home goods, and more. Quality products at unbeatable prices, delivered to your door.</p>
+                <p>Your one-stop destination for electronics, fashion, home goods, and more. Quality products at
+                    unbeatable prices, delivered to your door.</p>
                 <div class="social-links">
                     <a href="#" class="social-link" title="Facebook">&#x1F426;</a>
                     <a href="#" class="social-link" title="Twitter">&#x1D54F;</a>
@@ -236,7 +241,7 @@
         </div>
 
         <div class="footer-bottom">
-            <p>&copy; 2025 <a href="home.html">Brand</a>. All rights reserved.</p>
+            <p>&copy; 2026 <a href="home.html">KIYANI</a>. All rights reserved.</p>
             <ul class="footer-bottom-links">
                 <li><a href="#">Privacy Policy</a></li>
                 <li><a href="#">Terms of Use</a></li>
@@ -258,4 +263,5 @@
     <script src="assets/js/db.js"></script>
     <script src="assets/js/listing.js"></script>
 </body>
+
 </html>
