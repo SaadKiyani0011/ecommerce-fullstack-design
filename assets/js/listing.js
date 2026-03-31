@@ -39,7 +39,6 @@ function renderProducts(categoryKey) {
     data.products.forEach(prod => {
         const card = document.createElement('div');
         card.className = 'product-card';
-        // Enclose title inside an anchor tag that points to details.html WITH ID
         card.innerHTML = `
             <div class="product-img-wrapper">
                 <img src="${prod.img}" alt="${prod.name}">
@@ -53,6 +52,21 @@ function renderProducts(categoryKey) {
                 <div class="product-price">$${prod.price.toLocaleString()}</div>
             </div>
         `;
+
+        // Wire up Add to Cart button
+        const addBtn = card.querySelector('.add-cart-btn');
+        addBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            CartStore.addItem(prod, 1);
+            // Visual feedback
+            addBtn.textContent = 'Added ✓';
+            addBtn.style.background = '#16a34a';
+            setTimeout(() => {
+                addBtn.textContent = 'Add to Cart';
+                addBtn.style.background = '';
+            }, 1500);
+        });
+
         productGrid.appendChild(card);
     });
 }
@@ -70,6 +84,9 @@ function loadCategory(categoryKey) {
 
 // Initialization and Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
+    // Update cart badge on page load
+    if (typeof CartStore !== 'undefined') CartStore.updateBadge();
+
     // Determine active category from tabs or default to electronics
     const activeTab = document.querySelector('.cat-btn.active');
     const defaultCat = activeTab ? activeTab.dataset.cat : 'electronics';
@@ -89,13 +106,58 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Handle Theme specific logic if included from home.js equivalent
+    // Theme: Apply saved preference from localStorage on page load
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-theme');
+    }
+
+    // Handle Theme toggle button
     const themeToggle = document.getElementById('theme-toggle');
-    if(themeToggle) {
+    if (themeToggle) {
+        // Update button text based on current state
+        themeToggle.textContent = document.body.classList.contains('dark-theme') ? '☀️ Light Mode' : '🌙 Dark Mode';
+
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-theme');
             const isDark = document.body.classList.contains('dark-theme');
             themeToggle.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+    }
+
+    // Newsletter Subscribe Button
+    const newsletterBtn = document.getElementById('newsletter-btn');
+    const newsletterEmail = document.getElementById('newsletter-email');
+    if (newsletterBtn && newsletterEmail) {
+        newsletterBtn.addEventListener('click', () => {
+            const email = newsletterEmail.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const existing = document.getElementById('newsletter-feedback');
+            if (existing) existing.remove();
+            const feedback = document.createElement('p');
+            feedback.id = 'newsletter-feedback';
+            feedback.style.cssText = 'margin-top: 8px; font-size: 13px; font-weight: 500;';
+            if (!email) {
+                feedback.textContent = '⚠️ Please enter your email address.';
+                feedback.style.color = '#ff9800';
+            } else if (!emailRegex.test(email)) {
+                feedback.textContent = '⚠️ Please enter a valid email address.';
+                feedback.style.color = '#ff9800';
+            } else {
+                feedback.textContent = '✅ Thank you! You have successfully subscribed.';
+                feedback.style.color = '#4ade80';
+                newsletterEmail.value = '';
+                newsletterBtn.textContent = 'Subscribed ✓';
+                newsletterBtn.disabled = true;
+                newsletterBtn.style.opacity = '0.7';
+                setTimeout(() => {
+                    newsletterBtn.textContent = 'Subscribe';
+                    newsletterBtn.disabled = false;
+                    newsletterBtn.style.opacity = '';
+                    if (feedback.parentNode) feedback.remove();
+                }, 4000);
+            }
+            newsletterEmail.parentElement.appendChild(feedback);
         });
     }
 });

@@ -2,6 +2,9 @@ const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('id');
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Update cart badge on page load
+    if (typeof CartStore !== 'undefined') CartStore.updateBadge();
+
     // 1. Fetch data
     let product;
     if (productId) {
@@ -98,27 +101,85 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Basic Add to Cart interaction demo
+    // Real Add to Cart with quantity and variant
     const addCartBtn = document.getElementById('add-cart');
-    if(addCartBtn) {
+    const qtyInputEl = document.getElementById('qty-input');
+    if (addCartBtn && product) {
         addCartBtn.addEventListener('click', () => {
+            const qty = parseInt(qtyInputEl ? qtyInputEl.value : 1) || 1;
+
+            // Get selected color and size
+            const activeColor = document.querySelector('.color-swatch.active');
+            const activeSize  = document.querySelector('.size-btn.active');
+            const colorVal    = activeColor ? activeColor.style.backgroundColor : '';
+            const sizeVal     = activeSize  ? activeSize.textContent : '';
+            const variant     = [sizeVal, colorVal].filter(Boolean).join(' / ');
+
+            CartStore.addItem(product, qty, variant);
+
+            // Visual feedback
             const originalText = addCartBtn.textContent;
-            addCartBtn.textContent = "Added to Cart ✓";
-            addCartBtn.style.background = "#16a34a"; // Green
+            addCartBtn.textContent = `✓ Added to Cart (${qty})`;
+            addCartBtn.style.background = '#16a34a';
             setTimeout(() => {
                 addCartBtn.textContent = originalText;
-                addCartBtn.style.background = ""; // Restore via CSS override reset
+                addCartBtn.style.background = '';
             }, 2000);
         });
     }
 
+    // Theme: Apply saved preference from localStorage on page load
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-theme');
+    }
+
     // Theme logic hook (mirroring home behavior)
     const themeToggle = document.getElementById('theme-toggle');
-    if(themeToggle) {
+    if (themeToggle) {
+        // Update button text based on current state
+        themeToggle.textContent = document.body.classList.contains('dark-theme') ? '☀️ Light Mode' : '🌙 Dark Mode';
+
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-theme');
             const isDark = document.body.classList.contains('dark-theme');
             themeToggle.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+    }
+
+    // Newsletter Subscribe Button
+    const newsletterBtn = document.getElementById('newsletter-btn');
+    const newsletterEmail = document.getElementById('newsletter-email');
+    if (newsletterBtn && newsletterEmail) {
+        newsletterBtn.addEventListener('click', () => {
+            const email = newsletterEmail.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const existing = document.getElementById('newsletter-feedback');
+            if (existing) existing.remove();
+            const feedback = document.createElement('p');
+            feedback.id = 'newsletter-feedback';
+            feedback.style.cssText = 'margin-top: 8px; font-size: 13px; font-weight: 500;';
+            if (!email) {
+                feedback.textContent = '⚠️ Please enter your email address.';
+                feedback.style.color = '#ff9800';
+            } else if (!emailRegex.test(email)) {
+                feedback.textContent = '⚠️ Please enter a valid email address.';
+                feedback.style.color = '#ff9800';
+            } else {
+                feedback.textContent = '✅ Thank you! You have successfully subscribed.';
+                feedback.style.color = '#4ade80';
+                newsletterEmail.value = '';
+                newsletterBtn.textContent = 'Subscribed ✓';
+                newsletterBtn.disabled = true;
+                newsletterBtn.style.opacity = '0.7';
+                setTimeout(() => {
+                    newsletterBtn.textContent = 'Subscribe';
+                    newsletterBtn.disabled = false;
+                    newsletterBtn.style.opacity = '';
+                    if (feedback.parentNode) feedback.remove();
+                }, 4000);
+            }
+            newsletterEmail.parentElement.appendChild(feedback);
         });
     }
 });

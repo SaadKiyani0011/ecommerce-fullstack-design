@@ -1,6 +1,8 @@
 /* script.js */
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Update cart badge count on every page load
+    if (typeof CartStore !== 'undefined') CartStore.updateBadge();
     
     // 0. Dark Mode Toggle Logic
     const themeBtn = document.getElementById('theme-toggle');
@@ -222,6 +224,50 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault(); // Prevent browser refresh
             alert('Awesome! Your inquiry has been smoothly sent to the suppliers.');
             quoteForm.reset();  // Clear all form inputs
+        });
+    }
+
+    // 4. Newsletter Subscribe Button (Footer - works on all pages)
+    const newsletterBtn = document.getElementById('newsletter-btn');
+    const newsletterEmail = document.getElementById('newsletter-email');
+
+    if (newsletterBtn && newsletterEmail) {
+        newsletterBtn.addEventListener('click', () => {
+            const email = newsletterEmail.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            // Remove any existing feedback message
+            const existing = document.getElementById('newsletter-feedback');
+            if (existing) existing.remove();
+
+            const feedback = document.createElement('p');
+            feedback.id = 'newsletter-feedback';
+            feedback.style.cssText = 'margin-top: 8px; font-size: 13px; font-weight: 500;';
+
+            if (!email) {
+                feedback.textContent = '⚠️ Please enter your email address.';
+                feedback.style.color = '#ff9800';
+            } else if (!emailRegex.test(email)) {
+                feedback.textContent = '⚠️ Please enter a valid email address.';
+                feedback.style.color = '#ff9800';
+            } else {
+                feedback.textContent = '✅ Thank you! You have successfully subscribed.';
+                feedback.style.color = '#4ade80';
+                newsletterEmail.value = '';
+                newsletterBtn.textContent = 'Subscribed ✓';
+                newsletterBtn.disabled = true;
+                newsletterBtn.style.opacity = '0.7';
+                // Reset button after 4 seconds
+                setTimeout(() => {
+                    newsletterBtn.textContent = 'Subscribe';
+                    newsletterBtn.disabled = false;
+                    newsletterBtn.style.opacity = '';
+                    if (feedback.parentNode) feedback.remove();
+                }, 4000);
+            }
+
+            // Insert feedback below the form inputs
+            newsletterEmail.parentElement.appendChild(feedback);
         });
     }
 });

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="assets/css/home.css">
     <link rel="stylesheet" href="assets/css/listing.css"> <!-- For breadcrumbs/general -->
     <link rel="stylesheet" href="assets/css/details.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="light-theme">
@@ -43,10 +44,11 @@
                 <span class="icon">❤️</span>
                 <span class="label">Orders</span>
             </div>
-            <div class="action-item">
+            <a href="cart.html" class="cart-action-item">
+                <span id="cart-count-badge"></span>
                 <span class="icon">🛒</span>
                 <span class="label">My cart</span>
-            </div>
+            </a>
         </div>
     </header>
 
@@ -163,7 +165,102 @@
 
     </main>
 
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer">
+
+        <div class="footer-newsletter">
+            <div class="newsletter-text">
+                <h3>Subscribe to our newsletter</h3>
+                <p>Get the latest deals, offers and product updates delivered to your inbox.</p>
+            </div>
+            <div class="newsletter-form">
+                <input type="email" id="newsletter-email" placeholder="Enter your email address" />
+                <button class="newsletter-subscribe-btn" id="newsletter-btn">Subscribe</button>
+            </div>
+        </div>
+
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="home.html" class="brand-logo-wrap">
+                    <div class="footer-logo-icon">B</div>
+                    <span class="footer-brand-name">Brand</span>
+                </a>
+                <p>Your one-stop destination for electronics, fashion, home goods, and more. Quality products at unbeatable prices, delivered to your door.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link" title="Facebook">&#x1F426;</a>
+                    <a href="#" class="social-link" title="Twitter">&#x1D54F;</a>
+                    <a href="#" class="social-link" title="Instagram">&#x1F4F7;</a>
+                    <a href="#" class="social-link" title="YouTube">&#x25B6;</a>
+                    <a href="#" class="social-link" title="LinkedIn">in</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>About</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Find store</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">Blogs</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Help &amp; Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">How to buy</a></li>
+                    <li><a href="#">Track order</a></li>
+                    <li><a href="#">Corporate &amp; Bulk</a></li>
+                    <li><a href="#">Returns</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Popular</h4>
+                <ul>
+                    <li><a href="listing.html">Electronics</a></li>
+                    <li><a href="listing.html">Clothes</a></li>
+                    <li><a href="listing.html">Home &amp; Garden</a></li>
+                    <li><a href="listing.html">Sports</a></li>
+                    <li><a href="listing.html">Automotive</a></li>
+                    <li><a href="listing.html">Toys</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Get the App</h4>
+                <div class="app-badges">
+                    <a href="#" class="app-badge">
+                        <span class="badge-icon">&#xF8FF;</span>
+                        <div class="badge-text"><small>Download on the</small><span>App Store</span></div>
+                    </a>
+                    <a href="#" class="app-badge">
+                        <span class="badge-icon">&#x25B6;</span>
+                        <div class="badge-text"><small>Get it on</small><span>Google Play</span></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 <a href="home.html">Brand</a>. All rights reserved.</p>
+            <ul class="footer-bottom-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Use</a></li>
+                <li><a href="#">Cookie Policy</a></li>
+                <li><a href="#">Sitemap</a></li>
+            </ul>
+            <div class="footer-payment">
+                <span class="payment-badge">VISA</span>
+                <span class="payment-badge">Mastercard</span>
+                <span class="payment-badge">PayPal</span>
+                <span class="payment-badge">Stripe</span>
+            </div>
+        </div>
+
+    </footer>
+
     <!-- Essential Scripts -->
+    <script src="assets/js/cart-store.js"></script>
     <script src="assets/js/db.js"></script>
     <script src="assets/js/details.js"></script>
 </body>

@@ -7,6 +7,7 @@
     <!-- Link our global CSS and specific cart CSS -->
     <link rel="stylesheet" href="assets/css/home.css">
     <link rel="stylesheet" href="assets/css/cart.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
 </head>
 <body>
 
@@ -40,10 +41,11 @@
                 <span class="icon">❤️</span>
                 <span class="label">Orders</span>
             </div>
-            <div class="action-item">
+            <a href="cart.html" class="cart-action-item">
+                <span id="cart-count-badge"></span>
                 <span class="icon">🛒</span>
                 <span class="label">My cart</span>
-            </div>
+            </a>
         </div>
     </header>
 
@@ -54,7 +56,7 @@
             <li><a href="home.html">Home</a></li>
             <li><a href="listing.html">Product Listing</a></li>
             <li><a href="details.html">Product Details</a></li>
-            <li><a href="cart.html">Cart</a></li>
+            <li><a href="cart.html" style="font-weight: bold; color: var(--primary-color);">Cart</a></li>
         </ul>
         <div class="nav-preferences">
             <span>English, USD ▾</span>
@@ -64,151 +66,171 @@
 
     <!-- 3. CART CONTENT -->
     <main class="cart-page">
-        <h2 class="page-title">My cart (3)</h2>
-        
+        <h2 class="page-title" id="cart-page-title">My cart</h2>
+
         <div class="cart-layout">
-            <!-- Left: Items list -->
+            <!-- Left: Dynamic Items List -->
             <section class="cart-items-section">
-                <!-- Item 1 -->
-                <div class="cart-item">
-                    <img src="camera-main.png" alt="Product" class="item-img">
-                    <div class="item-details">
-                        <h4 class="item-name">GoPro HERO6 4K Action Camera - Black</h4>
-                        <p class="item-specs">Color: Black, Type: Classic</p>
-                        <div class="item-actions">
-                            <button class="action-btn text-danger remove-btn">Remove</button>
-                            <button class="action-btn text-primary">Save for later</button>
-                        </div>
-                    </div>
-                    <div class="item-price-qty">
-                        <span class="price">$98.00</span>
-                        <div class="quantity-selector">
-                            <button class="qty-btn minus">-</button>
-                            <input type="number" value="1" min="1" class="qty-input">
-                            <button class="qty-btn plus">+</button>
-                        </div>
-                    </div>
+
+                <!-- Dynamic cart items rendered by cart.js -->
+                <div id="cart-items-container">
+                    <!-- JS will render items here -->
                 </div>
 
-                <!-- Item 2 -->
-                <div class="cart-item">
-                    <img src="phone-listing1.png" alt="Product" class="item-img">
-                    <div class="item-details">
-                        <h4 class="item-name">Iphone 12 Pro Max - Blue Color</h4>
-                        <p class="item-specs">Color: Blue, Storage: 256GB</p>
-                        <div class="item-actions">
-                            <button class="action-btn text-danger remove-btn">Remove</button>
-                            <button class="action-btn text-primary">Save for later</button>
-                        </div>
-                    </div>
-                    <div class="item-price-qty">
-                        <span class="price">$999.00</span>
-                        <div class="quantity-selector">
-                            <button class="qty-btn minus">-</button>
-                            <input type="number" value="1" min="1" class="qty-input">
-                            <button class="qty-btn plus">+</button>
-                        </div>
-                    </div>
+                <!-- Empty Cart State -->
+                <div id="empty-cart-msg" style="display:none; text-align:center; padding: 60px 20px;">
+                    <div style="font-size: 64px; margin-bottom: 16px;">🛒</div>
+                    <h3 style="margin-bottom: 10px; color: var(--text-color);">Your cart is empty</h3>
+                    <p style="color: var(--secondary-text); margin-bottom: 24px;">Looks like you haven't added anything yet.</p>
+                    <button onclick="window.location.href='listing.html'" style="background:var(--primary-color); color:white; padding: 12px 28px; border-radius:8px; font-weight:600; border:none; cursor:pointer; font-size:15px;">Browse Products</button>
                 </div>
 
-                <!-- Item 3 -->
-                <div class="cart-item">
-                    <img src="laptop-listing.png" alt="Product" class="item-img">
-                    <div class="item-details">
-                        <h4 class="item-name">MacBook Pro M1 8GB Ram</h4>
-                        <p class="item-specs">Color: Space Grey</p>
-                        <div class="item-actions">
-                            <button class="action-btn text-danger remove-btn">Remove</button>
-                            <button class="action-btn text-primary">Save for later</button>
-                        </div>
-                    </div>
-                    <div class="item-price-qty">
-                        <span class="price">$1199.00</span>
-                        <div class="quantity-selector">
-                            <button class="qty-btn minus">-</button>
-                            <input type="number" value="1" min="1" class="qty-input">
-                            <button class="qty-btn plus">+</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="cart-footer-actions">
+                <!-- Footer Actions -->
+                <div class="cart-footer-actions" id="cart-footer-actions" style="display:none;">
                     <button class="back-shop-btn" onclick="window.location.href='listing.html'">← Back to shop</button>
-                    <button class="remove-all-btn">Remove all</button>
+                    <button class="remove-all-btn" id="clear-cart-btn">Remove all</button>
                 </div>
             </section>
 
             <!-- Right: Checkout Sidebar -->
-            <aside class="checkout-sidebar">
+            <aside class="checkout-sidebar" id="checkout-sidebar" style="display:none;">
                 <div class="coupon-box">
                     <p>Have a coupon?</p>
                     <div class="coupon-input">
-                        <input type="text" placeholder="Add coupon">
-                        <button>Apply</button>
+                        <input type="text" id="coupon-input" placeholder="Add coupon">
+                        <button id="coupon-apply-btn">Apply</button>
                     </div>
+                    <p id="coupon-msg" style="font-size:13px; margin-top:6px;"></p>
                 </div>
 
                 <div class="summary-box">
                     <div class="summary-row">
                         <span>Subtotal:</span>
-                        <span class="subtotal-val">$2296.00</span>
+                        <span class="subtotal-val" id="subtotal-val">$0.00</span>
                     </div>
                     <div class="summary-row">
                         <span>Discount:</span>
-                        <span class="discount-val text-danger">- $60.00</span>
+                        <span class="discount-val text-danger" id="discount-val">- $0.00</span>
                     </div>
                     <div class="summary-row">
-                        <span>Tax:</span>
-                        <span class="tax-val text-success">+ $14.00</span>
+                        <span>Tax (5%):</span>
+                        <span class="tax-val text-success" id="tax-val">+ $0.00</span>
                     </div>
                     <hr>
                     <div class="summary-row total-row">
                         <span>Total:</span>
-                        <span class="total-val">$2250.00</span>
+                        <span class="total-val" id="total-val">$0.00</span>
                     </div>
-                    <button class="checkout-btn">Checkout</button>
-                    
-                    <div class="payment-methods">
-                        <img src="payment-icons-placeholder.png" alt="Payments Accepted">
+                    <button class="checkout-btn" id="checkout-btn">Checkout</button>
+
+                    <div class="footer-payment" style="margin-top:16px; justify-content:center;">
+                        <span class="payment-badge">VISA</span>
+                        <span class="payment-badge">Mastercard</span>
+                        <span class="payment-badge">PayPal</span>
+                        <span class="payment-badge">Stripe</span>
                     </div>
                 </div>
             </aside>
         </div>
-
-        <!-- 4. SAVED FOR LATER SELECTION -->
-        <section class="saved-items-block">
-            <h3>Saved for later</h3>
-            <div class="saved-grid">
-                <div class="saved-card">
-                    <img src="watch-listing.png" alt="Product">
-                    <p class="price">$99.50</p>
-                    <p class="title">Apple Watch Series 6</p>
-                    <button class="move-cart-btn">🛒 Move to cart</button>
-                </div>
-                <!-- Duplicate cards for layout -->
-                <div class="saved-card">
-                    <img src="airpods-listing.png" alt="Product">
-                    <p class="price">$199.00</p>
-                    <p class="title">AirPods Pro Active Noise Cancelling</p>
-                    <button class="move-cart-btn">🛒 Move to cart</button>
-                </div>
-                <div class="saved-card">
-                    <img src="related1.png" alt="Product">
-                    <p class="price">$7.99</p>
-                    <p class="title">Mens Leather Wallets</p>
-                    <button class="move-cart-btn">🛒 Move to cart</button>
-                </div>
-                <div class="saved-card">
-                    <img src="related3.png" alt="Product">
-                    <p class="price">$12.00</p>
-                    <p class="title">T-shirts multi-color</p>
-                    <button class="move-cart-btn">🛒 Move to cart</button>
-                </div>
-            </div>
-        </section>
     </main>
 
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer">
+
+        <div class="footer-newsletter">
+            <div class="newsletter-text">
+                <h3>Subscribe to our newsletter</h3>
+                <p>Get the latest deals, offers and product updates delivered to your inbox.</p>
+            </div>
+            <div class="newsletter-form">
+                <input type="email" id="newsletter-email" placeholder="Enter your email address" />
+                <button class="newsletter-subscribe-btn" id="newsletter-btn">Subscribe</button>
+            </div>
+        </div>
+
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="home.html" class="brand-logo-wrap">
+                    <div class="footer-logo-icon">B</div>
+                    <span class="footer-brand-name">Brand</span>
+                </a>
+                <p>Your one-stop destination for electronics, fashion, home goods, and more. Quality products at unbeatable prices, delivered to your door.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link" title="Facebook">&#x1F426;</a>
+                    <a href="#" class="social-link" title="Twitter">&#x1D54F;</a>
+                    <a href="#" class="social-link" title="Instagram">&#x1F4F7;</a>
+                    <a href="#" class="social-link" title="YouTube">&#x25B6;</a>
+                    <a href="#" class="social-link" title="LinkedIn">in</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>About</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Find store</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">Blogs</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Help &amp; Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">How to buy</a></li>
+                    <li><a href="#">Track order</a></li>
+                    <li><a href="#">Corporate &amp; Bulk</a></li>
+                    <li><a href="#">Returns</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Popular</h4>
+                <ul>
+                    <li><a href="listing.html">Electronics</a></li>
+                    <li><a href="listing.html">Clothes</a></li>
+                    <li><a href="listing.html">Home &amp; Garden</a></li>
+                    <li><a href="listing.html">Sports</a></li>
+                    <li><a href="listing.html">Automotive</a></li>
+                    <li><a href="listing.html">Toys</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Get the App</h4>
+                <div class="app-badges">
+                    <a href="#" class="app-badge">
+                        <span class="badge-icon">&#xF8FF;</span>
+                        <div class="badge-text"><small>Download on the</small><span>App Store</span></div>
+                    </a>
+                    <a href="#" class="app-badge">
+                        <span class="badge-icon">&#x25B6;</span>
+                        <div class="badge-text"><small>Get it on</small><span>Google Play</span></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 <a href="home.html">Brand</a>. All rights reserved.</p>
+            <ul class="footer-bottom-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Use</a></li>
+                <li><a href="#">Cookie Policy</a></li>
+                <li><a href="#">Sitemap</a></li>
+            </ul>
+            <div class="footer-payment">
+                <span class="payment-badge">VISA</span>
+                <span class="payment-badge">Mastercard</span>
+                <span class="payment-badge">PayPal</span>
+                <span class="payment-badge">Stripe</span>
+            </div>
+        </div>
+
+    </footer>
+
     <!-- Essential Javascript for Global features like Page Transitions, Dark Mode Toggle -->
+    <script src="assets/js/cart-store.js"></script>
+    <script src="assets/js/db.js"></script>
     <script src="assets/js/home.js"></script>
     <script src="assets/js/cart.js"></script>
 </body>
