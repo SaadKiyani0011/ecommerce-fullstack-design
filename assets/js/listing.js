@@ -31,12 +31,45 @@ function renderSidebarFilters(categoryKey) {
     });
 }
 
-function renderProducts(categoryKey) {
-    const data = productDatabase[categoryKey];
-    productGrid.innerHTML = '';
-    resultsCount.textContent = `${data.products.length} items found`;
+function renderProducts(categoryKey, searchQuery = null) {
+    let productsToRender = [];
+    let titleToRender = "";
+    
+    // 1. Filter by category
+    if (categoryKey && categoryKey !== 'all' && productDatabase[categoryKey]) {
+        productsToRender = productDatabase[categoryKey].products;
+        titleToRender = productDatabase[categoryKey].title;
+    } else {
+        for (const key in productDatabase) {
+            productsToRender = productsToRender.concat(productDatabase[key].products);
+        }
+        titleToRender = "All Products";
+    }
 
-    data.products.forEach(prod => {
+    // 2. Filter by search query
+    if (searchQuery) {
+        const lowerQ = searchQuery.toLowerCase();
+        productsToRender = productsToRender.filter(p => 
+            p.name.toLowerCase().includes(lowerQ) || 
+            p.description.toLowerCase().includes(lowerQ)
+        );
+        titleToRender = `Search results for "${searchQuery}"`;
+    }
+
+    // Update breadcrumb visually
+    if (breadcrumbCategory) breadcrumbCategory.textContent = titleToRender;
+
+    productGrid.innerHTML = '';
+    
+    if (productsToRender.length === 0) {
+        resultsCount.textContent = `0 items found`;
+        productGrid.innerHTML = `<div style="grid-column: 1/-1; padding: 40px; text-align: center; color: var(--secondary-text);">No products found matching your search.</div>`;
+        return;
+    }
+
+    resultsCount.textContent = `${productsToRender.length} items found`;
+
+    productsToRender.forEach(prod => {
         const card = document.createElement('div');
         card.className = 'product-card';
         card.innerHTML = `
@@ -58,7 +91,6 @@ function renderProducts(categoryKey) {
         addBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             CartStore.addItem(prod, 1);
-            // Visual feedback
             addBtn.textContent = 'Added ✓';
             addBtn.style.background = '#16a34a';
             setTimeout(() => {
@@ -71,15 +103,17 @@ function renderProducts(categoryKey) {
     });
 }
 
-function loadCategory(categoryKey) {
-    if(!productDatabase[categoryKey]) return;
+function loadCategory(categoryKey, searchQuery = null) {
+    if (categoryKey !== 'all' && !productDatabase[categoryKey]) return;
     
-    // Update breadcrumb
-    breadcrumbCategory.textContent = productDatabase[categoryKey].title;
+    if (categoryKey !== 'all') {
+        renderSidebarFilters(categoryKey);
+    } else {
+        filterBrandsContainer.innerHTML = '<div style="color:var(--secondary-text); font-size:13px;">Showing all brands</div>';
+        filterFeaturesContainer.innerHTML = '<div style="color:var(--secondary-text); font-size:13px;">Showing all features</div>';
+    }
     
-    // Render
-    renderSidebarFilters(categoryKey);
-    renderProducts(categoryKey);
+    renderProducts(categoryKey, searchQuery);
 }
 
 // Initialization and Event Listeners
@@ -88,10 +122,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof CartStore !== 'undefined') CartStore.updateBadge();
 
     // Determine active category from tabs or default to electronics
-    const activeTab = document.querySelector('.cat-btn.active');
-    const defaultCat = activeTab ? activeTab.dataset.cat : 'electronics';
+    let initialCat = 'electronics';
+    let searchQuery = null;
+
+    // Check URL parameters for search
+    if (window.location.search) {
+        const urlParams = new URL(window.location.href).searchParams;
+        searchQuery = urlParams.get('q') || null;
+        if (urlParams.get('cat')) {
+            initialCat = urlParams.get('cat');
+        }
+    } else {
+        const activeTab = document.querySelector('.cat-btn.active');
+        if (activeTab) initialCat = activeTab.dataset.cat;
+    }
+
+    // Set correct active tab based on determined category
+    categoryTabs.forEach(t => t.classList.remove('active'));
+    if (initialCat !== 'all') {
+        const targetTab = document.querySelector(`.cat-btn[data-cat="${initialCat}"]`);
+        if (targetTab) targetTab.classList.add('active');
+    }
     
-    loadCategory(defaultCat);
+    loadCategory(initialCat, searchQuery);
 
     // Tab clicks
     categoryTabs.forEach(tab => {
