@@ -189,12 +189,12 @@ main { padding: 20px 5%; }
 .discount-badge { background-color: var(--badge-bg); color: var(--badge-text); padding: 5px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
 
 /* 5 & 6. Category Blocks */
-.category-grid-block { display: flex; margin-top: 20px; background-color: var(--card-bg); border-radius: 6px; border: 1px solid var(--border-color); overflow: hidden; height: 300px; }
+.category-grid-block { display: flex; margin-top: 20px; background-color: var(--card-bg); border-radius: 6px; border: 1px solid var(--border-color); overflow: hidden; }
 .category-main-banner { width: 250px; padding: 20px; background-color: var(--category-bg); display: flex; flex-direction: column; background-size: cover; background-position: center; }
 .category-main-banner h3 { font-size: 20px; margin-bottom: 15px; color: var(--text-color); }
 .source-now-btn { background-color: var(--card-bg); color: var(--text-color); padding: 8px 15px; border-radius: 6px; font-weight: 500; width: fit-content; margin-top: 10px; }
 
-.category-items-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: 1fr 1fr; flex: 1; }
+.category-items-grid { display: grid; grid-template-columns: repeat(4, 1fr); flex: 1; }
 .grid-item { border: 1px solid var(--border-color); padding: 15px; display: flex; justify-content: space-between; position: relative; border-top: none; border-left: none; }
 .grid-item h4 { font-size: 14px; font-weight: 500; color: var(--text-color); }
 .grid-item .price { font-size: 12px; color: var(--secondary-text); margin-top: 5px; display: block; }
