@@ -1,23 +1,27 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart</title>
-    <!-- Link our global CSS and specific cart CSS -->
-    <link rel="stylesheet" href="assets/css/home.css">
-    <link rel="stylesheet" href="assets/css/cart.css">
-    <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="shortcut icon" href="assets/Logo/LOGO.png" type="image/x-icon">
+    <title>Products Listing - KIYANI</title>
+    <!-- Include home.css for common header/nav styles -->
+    <link rel="stylesheet" href="{% static 'assets/css/home.css' %}">
+    <!-- Include listing specific styles -->
+    <link rel="stylesheet" href="{% static 'assets/css/listing.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/footer.css' %}">
+    <!-- Using Google Fonts matching home -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'assets/Logo/LOGO.png' %}" type="image/x-icon">
 </head>
 
-<body>
+<body class="light-theme">
 
-    <!-- 1. HEADER (Reused from Home) -->
+    <!-- 1. HEADER (Logo, Search, User Quick Links) -->
     <header class="top-header">
         <a href="home.html" class="logo-container" style="text-decoration: none;">
-            <img src="assets/Logo/LOGO.png" alt="Brand Logo" class="brand-logo">
+            <img src="{% static 'assets/Logo/LOGO.png' %}" alt="Brand Logo" class="brand-logo">
             <span class="brand-name">Brand</span>
         </a>
 
@@ -32,6 +36,7 @@
         <div class="header-actions">
             <!-- Theme Toggle -->
             <button id="theme-toggle" class="theme-toggle-btn">🌙 Dark Mode</button>
+
             <a href="login.html" class="action-item">
                 <span class="icon">👤</span>
                 <span class="label">Profile</span>
@@ -57,9 +62,9 @@
         <ul class="nav-links">
             <li><button class="all-category-btn">≡ Menu</button></li>
             <li><a href="home.html">Home</a></li>
-            <li><a href="listing.html">Product Listing</a></li>
+            <li><a href="listing.html" style="font-weight: bold; color: var(--primary-color);">Product Listing</a></li>
             <li><a href="details.html">Product Details</a></li>
-            <li><a href="cart.html" style="font-weight: bold; color: var(--primary-color);">Cart</a></li>
+            <li><a href="cart.html">Cart</a></li>
         </ul>
         <div class="nav-preferences">
             <span>English, USD ▾</span>
@@ -67,76 +72,95 @@
         </div>
     </nav>
 
-    <!-- 3. CART CONTENT -->
-    <main class="cart-page">
-        <h2 class="page-title" id="cart-page-title">My cart</h2>
+    <!-- 3. LISTING MAIN CONTENT -->
+    <main class="listing-main">
 
-        <div class="cart-layout">
-            <!-- Left: Dynamic Items List -->
-            <section class="cart-items-section">
+        <!-- Top Bar (Breadcrumb & Category Switcher Demo) -->
+        <div class="listing-top-bar">
+            <div class="breadcrumb">
+                <a href="home.html">Home</a> <span class="divider">></span> <span id="breadcrumb-category">Electronics &
+                    Tech</span>
+            </div>
 
-                <!-- Dynamic cart items rendered by cart.js -->
-                <div id="cart-items-container">
-                    <!-- JS will render items here -->
+            <div class="category-tabs" id="category-tabs">
+                <button class="cat-btn active" data-cat="electronics">Electronics</button>
+                <button class="cat-btn" data-cat="automobile">Automobiles</button>
+                <button class="cat-btn" data-cat="clothing">Clothing</button>
+                <button class="cat-btn" data-cat="home">Home Interiors</button>
+            </div>
+        </div>
+
+        <div class="listing-layout">
+            <!-- Left Sidebar: Filters -->
+            <aside class="filter-sidebar">
+
+                <div class="filter-group">
+                    <h4>Brands</h4>
+                    <div id="filter-brands" class="filter-options">
+                        <!-- Populated dynamically by listing.js -->
+                    </div>
                 </div>
 
-                <!-- Empty Cart State -->
-                <div id="empty-cart-msg" style="display:none; text-align:center; padding: 60px 20px;">
-                    <div style="font-size: 64px; margin-bottom: 16px;">🛒</div>
-                    <h3 style="margin-bottom: 10px; color: var(--text-color);">Your cart is empty</h3>
-                    <p style="color: var(--secondary-text); margin-bottom: 24px;">Looks like you haven't added anything
-                        yet.</p>
-                    <button onclick="window.location.href='listing.html'"
-                        style="background:var(--primary-color); color:white; padding: 12px 28px; border-radius:8px; font-weight:600; border:none; cursor:pointer; font-size:15px;">Browse
-                        Products</button>
+                <div class="filter-group">
+                    <h4>Features</h4>
+                    <div id="filter-features" class="filter-options">
+                        <!-- Populated dynamically by listing.js -->
+                    </div>
                 </div>
 
-                <!-- Footer Actions -->
-                <div class="cart-footer-actions" id="cart-footer-actions" style="display:none;">
-                    <button class="back-shop-btn" onclick="window.location.href='listing.html'">← Back to shop</button>
-                    <button class="remove-all-btn" id="clear-cart-btn">Remove all</button>
-                </div>
-            </section>
-
-            <!-- Right: Checkout Sidebar -->
-            <aside class="checkout-sidebar" id="checkout-sidebar" style="display:none;">
-                <div class="coupon-box">
-                    <p>Have a coupon?</p>
-                    <div class="coupon-input">
-                        <input type="text" id="coupon-input" placeholder="Add coupon">
-                        <button id="coupon-apply-btn">Apply</button>
-                    </div>
-                    <p id="coupon-msg" style="font-size:13px; margin-top:6px;"></p>
-                </div>
-
-                <div class="summary-box">
-                    <div class="summary-row">
-                        <span>Subtotal:</span>
-                        <span class="subtotal-val" id="subtotal-val">$0.00</span>
-                    </div>
-                    <div class="summary-row">
-                        <span>Discount:</span>
-                        <span class="discount-val text-danger" id="discount-val">- $0.00</span>
-                    </div>
-                    <div class="summary-row">
-                        <span>Tax (5%):</span>
-                        <span class="tax-val text-success" id="tax-val">+ $0.00</span>
-                    </div>
-                    <hr>
-                    <div class="summary-row total-row">
-                        <span>Total:</span>
-                        <span class="total-val" id="total-val">$0.00</span>
-                    </div>
-                    <button class="checkout-btn" id="checkout-btn">Checkout</button>
-
-                    <div class="footer-payment" style="margin-top:16px; justify-content:center;">
-                        <span class="payment-badge">VISA</span>
-                        <span class="payment-badge">Mastercard</span>
-                        <span class="payment-badge">PayPal</span>
-                        <span class="payment-badge">Stripe</span>
+                <div class="filter-group">
+                    <h4>Price Range</h4>
+                    <div class="filter-options">
+                        <label class="custom-radio">
+                            <input type="radio" name="price" value="all" checked>
+                            <span>All Prices</span>
+                        </label>
+                        <label class="custom-radio">
+                            <input type="radio" name="price" value="under50">
+                            <span>Under $50</span>
+                        </label>
+                        <label class="custom-radio">
+                            <input type="radio" name="price" value="50-200">
+                            <span>$50 - $200</span>
+                        </label>
+                        <label class="custom-radio">
+                            <input type="radio" name="price" value="over200">
+                            <span>Over $200</span>
+                        </label>
                     </div>
                 </div>
             </aside>
+
+            <!-- Right Area: Product Grid -->
+            <section class="products-section">
+                <!-- Controls -->
+                <div class="grid-controls">
+                    <div class="results-count" id="results-count">0 items found</div>
+                    <div class="view-options">
+                        <label>Sort by:</label>
+                        <select class="sort-select">
+                            <option>Best Match</option>
+                            <option>Price: Low to High</option>
+                            <option>Price: High to Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="product-grid" id="product-grid">
+                    <!-- Cards will be populated dynamically by listing.js -->
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="page-btn disabled">Previous</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">Next</button>
+                </div>
+
+            </section>
         </div>
     </main>
 
@@ -235,12 +259,10 @@
 
     </footer>
 
-    <!-- Essential Javascript for Global features like Page Transitions, Dark Mode Toggle -->
-    <script src="assets/js/search.js"></script>
-    <script src="assets/js/cart-store.js"></script>
-    <script src="assets/js/db.js"></script>
-    <script src="assets/js/home.js"></script>
-    <script src="assets/js/cart.js"></script>
+    <script src="{% static 'assets/js/search.js' %}"></script>
+    <script src="{% static 'assets/js/cart-store.js' %}"></script>
+    <script src="{% static 'assets/js/db.js' %}"></script>
+    <script src="{% static 'assets/js/listing.js' %}"></script>
 </body>
 
 </html>

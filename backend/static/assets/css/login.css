@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+
+body { 
+    background: #f6f8fb; /* Clean solid background */
+    display: flex; justify-content: center; align-items: center; flex-direction: column; 
+    height: 100vh; overflow: hidden; 
+}
+
+/* Page Transition Effects */
+body { animation: fadeInPage 0.5s ease-out forwards; }
+body.fade-out { animation: fadeOutPage 0.4s ease-in forwards; }
+
+@keyframes fadeInPage {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeOutPage {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.98); }
+}
+
+/* Back to Home Button */
+.back-home-btn { 
+    position: absolute; top: 30px; left: 30px; display: flex; align-items: center; gap: 8px; 
+    color: #1e293b; text-decoration: none; font-weight: 500; padding: 10px 15px; border-radius: 8px; 
+    background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: all 0.3s ease; 
+    z-index: 100; font-size: 14px; 
+}
+.back-home-btn:hover { background: #f97316; color: white; transform: translateX(-3px); box-shadow: 0 6px 15px rgba(249, 115, 22, 0.3); }
+
+/* Main Container - Adjusted for Full Screen Split Layout */
+.container { 
+    background-color: #f6f8fb; /* Left side background color from screenshot */
+    position: relative; overflow: hidden; 
+    width: 100vw; height: 100vh; /* Spans full screen */
+}
+
+.form-container { position: absolute; top: 0; height: 100%; transition: all 0.6s ease-in-out; background-color: #f6f8fb; }
+
+/* Forms */
+form { 
+    background-color: #f6f8fb; display: flex; align-items: flex-start; justify-content: center; 
+    flex-direction: column; padding: 0 15%; height: 100%; text-align: left; 
+}
+
+.form-header { margin-bottom: 35px; text-align: left; width: 100%; }
+h1 { font-weight: 400; font-size: 32px; color: #1e293b; margin-bottom: 5px; }
+.form-header p { font-size: 14px; color: #94a3b8; line-height: 1.5; }
+
+/* Inputs matching the clean screenshot style */
+.input-group { width: 100%; margin-bottom: 18px; }
+.input-group label { display: block; font-size: 13px; color: #475569; margin-bottom: 8px; }
+
+input[type="text"], input[type="email"], input[type="password"] { 
+    background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 14px 15px; 
+    width: 100%; font-size: 14px; outline: none; transition: all 0.3s ease; 
+}
+input[type="text"]::placeholder, input[type="email"]::placeholder, input[type="password"]::placeholder {
+    color: #94a3b8;
+}
+input[type="text"]:hover, input[type="email"]:hover, input[type="password"]:hover {
+    transform: translateY(-2px); border-color: #f97316; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.15);
+}
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus { 
+    transform: translateY(-3px); border-color: #f97316; box-shadow: 0 8px 20px rgba(249, 115, 22, 0.25); 
+}
+
+/* Form Options (Remember me & Forgot Password) */
+.form-options { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 25px; margin-top: 5px; }
+.remember-me { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #64748b; cursor: pointer; }
+.remember-me input { width: 16px; height: 16px; margin: 0; cursor: pointer; accent-color: #f97316; }
+
+.forgot-pwd { color: #94a3b8; font-size: 13px; text-decoration: none; transition: color 0.3s; }
+.forgot-pwd:hover { color: #f97316; text-decoration: underline; }
+
+/* Buttons */
+.action-btn { 
+    border-radius: 4px; border: none; background: #f97316; /* Orange to match screenshot */
+    color: #FFFFFF; font-size: 15px; font-weight: 500; padding: 15px 20px; 
+    transition: background 0.3s, transform 0.1s; cursor: pointer; width: 100%; 
+    box-shadow: 0 4px 6px rgba(249, 115, 22, 0.15); 
+}
+.action-btn:active { transform: scale(0.98); }
+.action-btn:hover { background: #ea580c; box-shadow: 0 6px 12px rgba(249, 115, 22, 0.25); }
+
+/* Ghost buttons for the overlay panel */
+button.ghost { 
+    background-color: transparent; border: 2px solid #FFFFFF; margin-top: 20px; border-radius: 4px; 
+    color: #FFFFFF; font-size: 14px; font-weight: 500; padding: 12px 35px; 
+    transition: background 0.3s, color 0.3s; cursor: pointer; 
+}
+button.ghost:hover { background: #FFFFFF; color: #1e293b; }
+
+/* Positioning & Animations for the Sliding Panel */
+.sign-in-container { left: 0; width: 50%; z-index: 2; opacity: 1; visibility: visible; }
+.container.right-panel-active .sign-in-container { transform: translateX(100%); opacity: 0; visibility: hidden; }
+
+.sign-up-container { left: 0; width: 50%; opacity: 0; visibility: hidden; z-index: 1; }
+.container.right-panel-active .sign-up-container { transform: translateX(100%); opacity: 1; visibility: visible; z-index: 5; animation: show 0.6s; }
+
+@keyframes show {
+	0%, 49.99% { opacity: 0; z-index: 1; visibility: hidden; }
+	50%, 100% { opacity: 1; z-index: 5; visibility: visible; }
+}
+
+/* Overlay System */
+.overlay-container { 
+    position: absolute; top: 0; left: 50%; width: 50%; height: 100%; 
+    overflow: hidden; transition: transform 0.6s ease-in-out; z-index: 100; 
+}
+.container.right-panel-active .overlay-container { transform: translateX(-100%); }
+
+/* The Image Background */
+.overlay { 
+    background: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=2070&auto=format&fit=crop') no-repeat center center; 
+    background-size: cover; 
+    color: #FFFFFF; position: relative; left: -100%; height: 100%; width: 200%; 
+    transform: translateX(0); transition: transform 0.6s ease-in-out; 
+}
+/* A dark tint over the image to make the white text readable */
+.overlay::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.3); z-index: 0;
+}
+.container.right-panel-active .overlay { transform: translateX(50%); }
+
+.overlay-panel { 
+    position: absolute; display: flex; align-items: center; justify-content: center; flex-direction: column; 
+    padding: 0 15%; text-align: center; top: 0; height: 100%; width: 50%; 
+    transform: translateX(0); transition: transform 0.6s ease-in-out; z-index: 1;
+}
+.overlay-panel h1 { color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+.overlay-panel p { font-size: 15px; font-weight: 400; line-height: 1.5; margin: 20px 0 30px; text-shadow: 0 1px 3px rgba(0,0,0,0.4);}
+
+.overlay-left { transform: translateX(-20%); }
+.container.right-panel-active .overlay-left { transform: translateX(0); }
+.overlay-right { right: 0; transform: translateX(0); }
+.container.right-panel-active .overlay-right { transform: translateX(20%); }
+
+/* Mobile Support */
+@media (max-width: 768px) {
+    body { background-color: #fff; overflow-y: auto; display: block; padding-top: 80px; }
+    
+    .container { width: 100%; min-height: auto; height: auto; display: flex; flex-direction: column; }
+    
+    .form-container { position: relative; width: 100%; height: auto; padding: 40px 0; transition: none; opacity: 1; z-index: 1; }
+    .sign-in-container, .container.right-panel-active .sign-in-container { transform: none; left: 0; }
+    .sign-up-container, .container.right-panel-active .sign-up-container { transform: none; left: 0; animation: none; border-bottom: 2px dashed #e2e8f0; }
+    
+    .overlay-container { display: none; }
+    form { padding: 0 8%; }
+}

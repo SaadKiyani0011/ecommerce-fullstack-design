@@ -1,0 +1,302 @@
+/* cart.css */
+
+.cart-page {
+    padding: 30px 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: var(--text-color);
+}
+
+.cart-layout {
+    display: flex;
+    gap: 20px;
+}
+
+/* Left portion items */
+.cart-items-section {
+    flex: 1;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 20px;
+    height: fit-content;
+}
+
+.cart-item {
+    display: flex;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.item-img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 5px;
+    margin-right: 15px;
+}
+
+.item-details {
+    flex: 1;
+}
+
+.item-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+.item-specs {
+    font-size: 14px;
+    color: var(--secondary-text);
+    margin-bottom: 10px;
+}
+
+.item-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: 0.2s;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+.action-btn:hover { background-color: var(--hover-bg); }
+.text-danger { color: #eb001b; }
+.text-primary { color: var(--primary-color); }
+
+.item-price-qty {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.item-price-qty .price {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* Reused from details basically but scoped */
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: var(--card-bg);
+}
+
+.qty-btn {
+    background-color: var(--bg-color);
+    border: none;
+    color: var(--text-color);
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+}
+
+.qty-input {
+    width: 50px;
+    height: 35px;
+    border: none;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    text-align: center;
+    font-size: 14px;
+    background-color: transparent;
+    color: var(--text-color);
+    outline: none;
+}
+.qty-input::-webkit-inner-spin-button, .qty-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+.cart-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.back-shop-btn, .remove-all-btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 14px;
+    border: 1px solid var(--primary-color);
+}
+
+.remove-all-btn {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+.remove-all-btn:hover { background-color: var(--hover-bg); }
+
+/* Right Sidebar Portion */
+.checkout-sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.coupon-box {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    border-radius: 6px;
+}
+
+.coupon-box p {
+    font-size: 14px;
+    color: var(--secondary-text);
+    margin-bottom: 10px;
+}
+
+.coupon-input {
+    display: flex;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.coupon-input input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+}
+
+.coupon-input button {
+    padding: 10px 15px;
+    border: none;
+    border-left: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+    font-weight: 500;
+    transition: 0.2s;
+}
+.coupon-input button:hover { background-color: var(--hover-bg); }
+
+.summary-box {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 6px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: var(--secondary-text);
+}
+
+.summary-row hr {
+    width: 100%; border: none; border-top: 1px solid var(--border-color); margin: 15px 0;
+}
+
+.text-danger { color: #eb001b; }
+.text-success { color: #00b517; }
+
+.total-row {
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 18px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 15px;
+}
+
+.checkout-btn {
+    background-color: #00b517;
+    color: white;
+    width: 100%;
+    padding: 15px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    transition: 0.2s;
+}
+.checkout-btn:hover { background-color: #009612; }
+
+.payment-methods {
+    text-align: center;
+    background-color: var(--bg-color);
+    border-radius: 6px;
+    padding: 5px;
+}
+.payment-methods img { width: 100%; object-fit: contain; }
+
+/* Saved For Later Section */
+.saved-items-block {
+    margin-top: 30px;
+    background-color: var(--card-bg);
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+}
+
+.saved-items-block h3 { margin-bottom: 20px; font-size: 18px; color: var(--text-color); }
+
+.saved-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.saved-card {
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.saved-card img {
+    width: 100px; height: 100px; margin: 0 auto 15px; object-fit: contain; padding: 5px; border-radius: 6px; background-color: var(--bg-color);
+}
+
+.saved-card .price { font-weight: 600; color: var(--text-color); margin-bottom: 5px; font-size: 16px; }
+.saved-card .title { font-size: 14px; color: var(--secondary-text); margin-bottom: 15px; line-height: 1.4; flex: 1; }
+
+.move-cart-btn {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--primary-color);
+    padding: 8px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: 0.2s;
+}
+.move-cart-btn:hover { background-color: var(--hover-bg); }
+
+@media (max-width: 1024px) {
+    .cart-layout { flex-direction: column; }
+    .checkout-sidebar { width: 100%; }
+    .saved-grid { grid-template-columns: repeat(2, 1fr); }
+}
