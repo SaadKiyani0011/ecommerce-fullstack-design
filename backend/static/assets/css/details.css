@@ -1,0 +1,159 @@
+/* Basic structure & layout matching the premium e-commerce look */
+.details-main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+/* Typography styles used purely in details.html */
+.stock-status { color: #16a34a; font-weight: 600; font-size: 13px; margin-bottom: 10px; display: inline-block; background: #dcfce7; padding: 4px 10px; border-radius: 4px; }
+.product-title { font-size: 32px; font-weight: 700; color: var(--text-color); margin-bottom: 15px; line-height: 1.2; }
+
+/* Ratings row */
+.rating-row { display: flex; align-items: center; gap: 8px; margin-bottom: 15px; font-size: 14px; }
+.stars { color: #f59e0b; }
+.rating-score { font-weight: 600; color: var(--text-color); }
+.reviews-count { color: var(--secondary-text); }
+
+/* Pricing */
+.price-row { display: flex; align-items: baseline; gap: 15px; margin-bottom: 25px; }
+.current-price { font-size: 32px; font-weight: 700; color: #dc2626; }
+.old-price { font-size: 18px; color: #94a3b8; text-decoration: line-through; }
+.dark-theme .current-price { color: #ef4444; }
+
+.product-description { font-size: 15px; line-height: 1.6; color: var(--secondary-text); margin-bottom: 25px; }
+.divider { border: 0; border-top: 1px solid var(--border-color); margin: 25px 0; }
+
+/* THE 50/50 SPLIT using Grid */
+.product-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+/* LEFT: GALLERY SECTION */
+.gallery-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.main-image-wrapper {
+    width: 100%;
+    aspect-ratio: 1/1; /* Square for perfect e-commerce alignment */
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex; justify-content: center; align-items: center;
+    position: relative;
+    cursor: crosshair; /* Indicate zoom */
+}
+.main-image-wrapper img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.1s ease-out;
+    transform-origin: center center;
+}
+.main-image-wrapper.zoomed img {
+    transform: scale(2);
+}
+
+/* Overriding for dark mode */
+.dark-theme .main-image-wrapper { background: #1e293b; border-color: #334155; }
+
+.thumbnail-row {
+    display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px;
+}
+.thumb-img {
+    width: 80px; height: 80px;
+    border-radius: 8px; border: 2px solid var(--border-color);
+    cursor: pointer; object-fit: cover;
+    transition: all 0.3s ease;
+}
+.thumb-img.active, .thumb-img:hover { border-color: var(--primary-color); }
+
+/* RIGHT: INFO SECTION */
+.info-section {
+    display: flex; flex-direction: column;
+}
+
+/* Dynamic Variant Selectors (Color & Sizes) */
+.variant-area { margin-bottom: 20px; }
+.variant-label { font-size: 14px; font-weight: 600; color: var(--text-color); margin-bottom: 10px; }
+
+/* Colors */
+.color-options { display: flex; gap: 12px; }
+.color-swatch {
+    width: 35px; height: 35px; border-radius: 50%;
+    border: 2px solid transparent; cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s, border 0.2s;
+}
+.color-swatch:hover { transform: scale(1.1); }
+.color-swatch.active { border-color: var(--primary-color); padding: 2px; background-clip: content-box; border-width: 3px; }
+
+/* Sizes */
+.size-options { display: flex; flex-wrap: wrap; gap: 10px; }
+.size-btn {
+    padding: 10px 18px; border: 1px solid var(--border-color); border-radius: 6px;
+    background: var(--card-bg); color: var(--text-color); cursor: pointer;
+    font-size: 14px; font-weight: 500; transition: all 0.2s;
+}
+.size-btn:hover { border-color: var(--primary-color); }
+.size-btn.active {
+    border-color: var(--primary-color); background: var(--primary-color); color: white;
+}
+
+/* Action Area (Quantity & Cart) */
+.action-row { display: flex; gap: 15px; margin-bottom: 30px; align-items: center; }
+
+.quantity-picker {
+    display: flex; align-items: center; border: 1px solid var(--border-color);
+    border-radius: 6px; width: 140px; height: 50px; background: var(--card-bg);
+}
+.quantity-picker button {
+    flex: 1; border: none; background: transparent; font-size: 20px; color: var(--text-color); cursor: pointer;
+    transition: background 0.2s; height: 100%; border-radius: 4px;
+}
+.quantity-picker button:hover { background: rgba(59,130,246,0.1); color: var(--primary-color); }
+.quantity-picker input {
+    flex: 1; text-align: center; border: none; font-size: 16px; font-weight: 600;
+    width: 40px; background: transparent; color: var(--text-color); outline: none;
+}
+
+.add-to-cart-btn {
+    flex: 1;
+    height: 50px; border: none; border-radius: 6px;
+    background: linear-gradient(90deg, #3b82f6, #2563eb); color: white;
+    font-size: 16px; font-weight: 600; cursor: pointer;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); transition: transform 0.2s, box-shadow 0.2s;
+}
+.add-to-cart-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4); }
+
+.wishlist-btn {
+    width: 50px; height: 50px; border: 1px solid var(--border-color); border-radius: 6px;
+    background: var(--card-bg); color: var(--text-color); cursor: pointer;
+    display: flex; justify-content: center; align-items: center; transition: all 0.2s;
+}
+.wishlist-btn:hover { border-color: #ef4444; color: #ef4444; }
+
+/* Store Meta Info */
+.store-meta { display: flex; flex-direction: column; gap: 8px; background: var(--card-bg); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); }
+.meta-item { font-size: 14px; color: var(--secondary-text); }
+
+/* BOTTOM TABS */
+.product-tabs-section {
+    margin-top: 60px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px;
+}
+.tabs-header { display: flex; border-bottom: 1px solid var(--border-color); }
+.tab-btn {
+    padding: 15px 30px; border: none; background: transparent; color: var(--secondary-text);
+    font-size: 15px; font-weight: 500; cursor: pointer; transition: color 0.3s;
+    border-bottom: 3px solid transparent;
+}
+.tab-btn:hover { color: var(--primary-color); }
+.tab-btn.active { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+
+/* Mobile Response */
+@media (max-width: 900px) {
+    .product-split { grid-template-columns: 1fr; gap: 30px; }
+}

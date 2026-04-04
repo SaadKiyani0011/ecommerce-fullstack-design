@@ -1,0 +1,398 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIYANI Home Page</title>
+    <link rel="stylesheet" href="{% static 'assets/css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/toast.css' %}">
+    <link rel="shortcut icon" href="{% static 'assets/Logo/LOGO.png' %}" type="image/x-icon">
+</head>
+
+<body>
+
+    <!-- 1. HEADER (Logo, Search, User Quick Links) -->
+    <header class="top-header">
+        <a href="home.html" class="logo-container" style="text-decoration: none;">
+            <img src="{% static 'assets/Logo/LOGO.png' %}" alt="Brand Logo" class="brand-logo">
+            <span class="brand-name">Brand</span>
+        </a>
+
+        <div class="search-container">
+            <input class="search-input" type="text" placeholder="Search">
+            <select class="category-select">
+                <option value="all">All category</option>
+            </select>
+            <button class="search-btn">Search</button>
+        </div>
+
+        <div class="header-actions">
+            <!-- Theme Toggle -->
+            <button id="theme-toggle" class="theme-toggle-btn">🌙 Dark Mode</button>
+
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="action-item" onclick="return confirm('Are you sure you want to logout?');">
+                <span class="icon" style="color: #ef4444;">🚪</span>
+                <span class="label" style="color: #ef4444;">Logout</span>
+            </a>
+            <a href="#" class="action-item">
+                <span class="icon">👤</span>
+                <span class="label" style="font-weight: 600;">{{ request.user.first_name|default:request.user.username }}</span>
+            </a>
+            {% else %}
+            <a href="login.html" class="action-item">
+                <span class="icon">👤</span>
+                <span class="label">Profile</span>
+            </a>
+            {% endif %}
+            <a href="#" class="action-item" onclick="showToast('Messages feature coming soon!', 'info')">
+                <span class="icon">💬</span>
+                <span class="label">Message</span>
+            </a>
+            <a href="#" class="action-item" onclick="showToast('Orders feature coming soon!', 'info')">
+                <span class="icon">❤️</span>
+                <span class="label">Orders</span>
+            </a>
+            <a href="cart.html" class="cart-action-item">
+                <span id="cart-count-badge"></span>
+                <span class="icon">🛒</span>
+                <span class="label">My cart</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- 2. MAIN NAVIGATION -->
+    <nav class="main-nav">
+        <ul class="nav-links">
+            <li><button class="all-category-btn">≡ Menu</button></li>
+            <li><a href="home.html" style="font-weight: bold; color: var(--primary-color);">Home</a></li>
+            <li><a href="listing.html">Product Listing</a></li>
+            <li><a href="details.html">Product Details</a></li>
+            <li><a href="cart.html">Cart</a></li>
+        </ul>
+        <div class="nav-preferences">
+            <span>English, USD ▾</span>
+            <span>Ship to 🇩🇪 ▾</span>
+        </div>
+    </nav>
+
+    <main>
+        <!-- 3. HERO SECTION (Categories Sidebar, Main Banner, User Panels) -->
+        <section class="hero-section">
+            <!-- Left Sidebar -->
+            <aside class="sidebar-categories">
+                <ul id="category-list">
+                    <li class="active" data-id="automobiles"><a href="#">Automobiles</a></li>
+                    <li data-id="clothes"><a href="#">Clothes and wear</a></li>
+                    <li data-id="home"><a href="#">Home interiors</a></li>
+                    <li data-id="tech"><a href="#">Computer and tech</a></li>
+                    <li data-id="tools"><a href="#">Tools, equipments</a></li>
+                    <li data-id="sports"><a href="#">Sports and outdoor</a></li>
+                    <li data-id="animals"><a href="#">Animal and pets</a></li>
+                    <li data-id="machinery"><a href="#">Machinery tools</a></li>
+                    <li data-id="more"><a href="#">More category</a></li>
+                </ul>
+            </aside>
+
+            <!-- Center Banner -->
+            <div class="hero-banner" id="main-hero-banner">
+                <img id="banner-img"
+                    src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800&q=80"
+                    alt="Hero Banner">
+                <div class="banner-overlay"></div>
+                <div class="banner-content">
+                    <h2 id="banner-title">Latest trending<br>Automobiles</h2>
+                </div>
+            </div>
+
+            <!-- Right Panels -->
+            <aside class="hero-side-panels">
+                <div class="user-panel">
+                    <div class="avatar-ring">
+                        <div class="user-avatar">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                    </div>
+                    {% if request.user.is_authenticated %}
+                    <p class="greeting">Hi, {{ request.user.first_name }}!</p>
+                    <p class="subtitle">Welcome back to KIYANI. Explore new deals today.</p>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="window.location.href='listing.html'" style="width: 100%;">Shop Now</button>
+                    </div>
+                    {% else %}
+                    <p class="greeting">Hi, Guest!</p>
+                    <p class="subtitle">Log in to view your orders, messages, and preferences.</p>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="window.location.href='login.html'">Log in securely</button>
+                        <button class="btn-secondary" onclick="window.location.href='login.html'">Create
+                            Account</button>
+                    </div>
+                    {% endif %}
+                </div>
+            </aside>
+        </section>
+
+        <!-- 4. DEALS AND OFFERS -->
+        <section class="deals-offers-section">
+            <div class="deals-info">
+                <h3>Deals and offers</h3>
+                <p>Hygiene equipments</p>
+                <div class="countdown-timer">
+                    <div class="time-box"><span class="number">04</span><span class="text">Days</span></div>
+                    <div class="time-box"><span class="number">13</span><span class="text">Hour</span></div>
+                    <div class="time-box"><span class="number">34</span><span class="text">Min</span></div>
+                    <div class="time-box"><span class="number">56</span><span class="text">Sec</span></div>
+                </div>
+            </div>
+            <div class="deals-products">
+                {% for product in deals_products %}
+                <div class="deal-card" onclick="window.location.href='details.html?id={{ product.id }}'" style="cursor: pointer;">
+                    <img src="{{ product.main_image_url }}" alt="{{ product.name }}">
+                    <p style="text-align: center; display: -webkit-box; -webkit-line-clamp: 1; line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;">{{ product.name }}</p>
+                    <span class="discount-badge">-25%</span>
+                </div>
+                {% empty %}
+                <p style="padding: 20px; color: var(--secondary-text);">No deals currently available.</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- 5. HOME AND OUTDOOR CATEGORY BLOCK -->
+        <section class="category-grid-block">
+            <div class="category-main-banner" style="background-image: url('home-outdoor-bg.png');">
+                <h3>Home and outdoor</h3>
+                <button class="source-now-btn">Source now</button>
+            </div>
+            <div class="category-items-grid">
+                <div class="grid-item">
+                    <h4>Soft chairs</h4>
+                    <span class="price">From USD 19</span>
+                    <img src="https://renome.pk/wp-content/uploads/2025/11/Plushora-Sofa-Chair-3-1024x681.jpg"
+                        alt="Soft chairs">
+                </div>
+                <div class="grid-item">
+                    <h4>Sofa & chair</h4>
+                    <span class="price">From USD 19</span>
+                    <img src="https://poshish.pk/cdn/shop/files/IMG_5891_1800x1800.webp?v=1723288348"
+                        alt="Sofa & chair">
+                </div>
+                <div class="grid-item">
+                    <h4>Kitchen mixer</h4>
+                    <span class="price">From USD 19</span>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQW01lsHA30hJqe7pJwMmEjwmHPOla6Pn_SA&s"
+                        alt="Kitchen mixer">
+                </div>
+                <div class="grid-item">
+                    <h4>Blenders</h4>
+                    <span class="price">From USD 19</span>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEsqfoaKbmRjErg90s50ecAV2UFInqsyn4KA&s"
+                        alt="Blenders">
+                </div>
+                <!-- You can add more grid items following this pattern -->
+            </div>
+        </section>
+
+        <!-- 6. CONSUMER ELECTRONICS AND GADGETS BLOCK -->
+        <section class="category-grid-block">
+            <div class="category-main-banner" style="background-image: url('consumer-electronics-bg.png');">
+                <h3>Consumer electronics and gadgets</h3>
+                <button class="source-now-btn">Source now</button>
+            </div>
+            <div class="category-items-grid">
+                <div class="grid-item">
+                    <h4>Smart watches</h4>
+                    <span class="price">From USD 19</span>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBB-k00lBy0s-LBiui0GSeKaWdm__iaFXozQ&s"
+                        alt="Smart watches">
+                </div>
+                <div class="grid-item">
+                    <h4>Cameras</h4>
+                    <span class="price">From USD 19</span>
+                    <img src="https://cdn.mos.cms.futurecdn.net/GXHa4PWwDPx7tGQG9MDQvK.jpg" alt="Cameras">
+                </div>
+                <div class="grid-item">
+                    <h4>Headphones</h4>
+                    <span class="price">From USD 19</span>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUVkGTZFKBdhD1pyFx-2SHavPUhVnc-dYFgA&s"
+                        alt="Headphones">
+                </div>
+                <div class="grid-item">
+                    <h4>Smartphones</h4>
+                    <span class="price">From USD 19</span>
+                    <img src="https://cdn.thewirecutter.com/wp-content/media/2025/11/BEST-SMART-PHONES-3x2-1.jpg?auto=webp&quality=75&crop=3:2&width=1024"
+                        alt="Smartphones">
+                </div>
+                <!-- You can add more grid items following this pattern -->
+            </div>
+        </section>
+
+        <!-- 7. SEND QUOTE TO SUPPLIERS FORM -->
+        <section class="supplier-request-section">
+            <div class="supplier-text-content">
+                <h2>An easy way to send requests to all suppliers</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+            </div>
+            <div class="supplier-form-container">
+                <h3>Send quote to suppliers</h3>
+                <form class="quote-form">
+                    <input type="text" placeholder="What item you need?" required>
+                    <textarea placeholder="Type more details" rows="3" required></textarea>
+                    <div class="form-row">
+                        <input type="number" placeholder="Quantity" class="qty-input">
+                        <select class="unit-select">
+                            <option value="pcs">Pcs</option>
+                            <option value="kg">Kg</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="send-inquiry-btn">Send inquiry</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 8. RECOMMENDED ITEMS -->
+        <section class="recommended-section">
+            <h3>Recommended items</h3>
+            <div class="recommended-grid">
+                {% for product in recommended_products %}
+                <div class="recommended-card" onclick="window.location.href='details.html?id={{ product.id }}'" style="cursor: pointer;">
+                    <img src="{{ product.main_image_url }}" alt="{{ product.name }}">
+                    <div class="product-details">
+                        <span class="price">${{ product.price }}</span>
+                        <p class="desc" style="display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ product.name }}</p>
+                    </div>
+                </div>
+                {% empty %}
+                <p style="grid-column: 1/-1; text-align: center; color: var(--secondary-text);">No products available yet.</p>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer">
+
+        <!-- Newsletter Band -->
+        <div class="footer-newsletter">
+            <div class="newsletter-text">
+                <h3>Subscribe to our newsletter</h3>
+                <p>Get the latest deals, offers and product updates delivered to your inbox.</p>
+            </div>
+            <div class="newsletter-form">
+                <input type="email" id="newsletter-email" placeholder="Enter your email address" />
+                <button class="newsletter-subscribe-btn" id="newsletter-btn">Subscribe</button>
+            </div>
+        </div>
+
+        <!-- Main Footer Grid -->
+        <div class="footer-grid">
+
+            <!-- Brand Column -->
+            <div class="footer-brand">
+                <a href="home.html" class="brand-logo-wrap">
+                    <div class="footer-logo-icon">B</div>
+                    <span class="footer-brand-name">Brand</span>
+                </a>
+                <p>Your one-stop destination for electronics, fashion, home goods, and more. Quality products at
+                    unbeatable prices, delivered to your door.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link" title="Facebook">&#x1F426;</a>
+                    <a href="#" class="social-link" title="Twitter">&#x1D54F;</a>
+                    <a href="#" class="social-link" title="Instagram">&#x1F4F7;</a>
+                    <a href="#" class="social-link" title="YouTube">&#x25B6;</a>
+                    <a href="#" class="social-link" title="LinkedIn">in</a>
+                </div>
+            </div>
+
+            <!-- About Column -->
+            <div class="footer-col">
+                <h4>About</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Find store</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">Blogs</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+
+            <!-- Help & Support Column -->
+            <div class="footer-col">
+                <h4>Help &amp; Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">How to buy</a></li>
+                    <li><a href="#">Track order</a></li>
+                    <li><a href="#">Corporate &amp; Bulk</a></li>
+                    <li><a href="#">Returns</a></li>
+                </ul>
+            </div>
+
+            <!-- Popular Categories Column -->
+            <div class="footer-col">
+                <h4>Popular</h4>
+                <ul>
+                    <li><a href="listing.html">Electronics</a></li>
+                    <li><a href="listing.html">Clothes</a></li>
+                    <li><a href="listing.html">Home &amp; Garden</a></li>
+                    <li><a href="listing.html">Sports</a></li>
+                    <li><a href="listing.html">Automotive</a></li>
+                    <li><a href="listing.html">Toys</a></li>
+                </ul>
+            </div>
+
+            <!-- App Download Column -->
+            <div class="footer-col">
+                <h4>Get the App</h4>
+                <div class="app-badges">
+                    <a href="#" class="app-badge">
+                        <span class="badge-icon">&#xF8FF;</span>
+                        <div class="badge-text">
+                            <small>Download on the</small>
+                            <span>App Store</span>
+                        </div>
+                    </a>
+                    <a href="#" class="app-badge">
+                        <span class="badge-icon">&#x25B6;</span>
+                        <div class="badge-text">
+                            <small>Get it on</small>
+                            <span>Google Play</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom Bar -->
+        <div class="footer-bottom">
+            <p>&copy; 2026 <a href="home.html">KIYANI</a>. All rights reserved.</p>
+            <ul class="footer-bottom-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Use</a></li>
+                <li><a href="#">Cookie Policy</a></li>
+                <li><a href="#">Sitemap</a></li>
+            </ul>
+            <div class="footer-payment">
+                <span class="payment-badge">VISA</span>
+                <span class="payment-badge">Mastercard</span>
+                <span class="payment-badge">PayPal</span>
+                <span class="payment-badge">Stripe</span>
+            </div>
+        </div>
+
+    </footer>
+
+    <script src="{% static 'assets/js/search.js' %}"></script>
+    <script src="{% static 'assets/js/toast.js' %}"></script>
+    <script src="{% static 'assets/js/cart-store.js' %}"></script>
+    <script src="{% static 'assets/js/home.js' %}"></script>
+</body>
+
+</html>
