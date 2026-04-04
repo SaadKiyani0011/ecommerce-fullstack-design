@@ -8,6 +8,8 @@ const breadcrumbCategory = document.getElementById('breadcrumb-category');
 const resultsCount = document.getElementById('results-count');
 const categoryTabs = document.querySelectorAll('.cat-btn');
 
+let currentSearchQuery = null;
+
 // Render Functions
 function renderSidebarFilters(categoryKey) {
     const data = productDatabase[categoryKey];
@@ -29,6 +31,15 @@ function renderSidebarFilters(categoryKey) {
         label.innerHTML = `<input type="checkbox" value="${feature}"> <span>${feature}</span>`;
         filterFeaturesContainer.appendChild(label);
     });
+
+    // Attach listening events for dynamic filtering
+    document.querySelectorAll('#filter-brands input, #filter-features input').forEach(input => {
+        input.addEventListener('change', () => {
+            const activeTab = document.querySelector('.cat-btn.active');
+            let currentCat = activeTab ? activeTab.dataset.cat : 'all';
+            renderProducts(currentCat, currentSearchQuery);
+        });
+    });
 }
 
 function renderProducts(categoryKey, searchQuery = null) {
@@ -48,12 +59,34 @@ function renderProducts(categoryKey, searchQuery = null) {
 
     // 2. Filter by search query
     if (searchQuery) {
+        currentSearchQuery = searchQuery;
         const lowerQ = searchQuery.toLowerCase();
         productsToRender = productsToRender.filter(p => 
             p.name.toLowerCase().includes(lowerQ) || 
             p.description.toLowerCase().includes(lowerQ)
         );
         titleToRender = `Search results for "${searchQuery}"`;
+    }
+
+    // 3. Filter by Brands
+    const checkedBrands = Array.from(document.querySelectorAll('#filter-brands input:checked')).map(cb => cb.value.toLowerCase());
+    if (checkedBrands.length > 0) {
+        productsToRender = productsToRender.filter(p => checkedBrands.some(brand => p.name.toLowerCase().includes(brand) || p.description.toLowerCase().includes(brand)));
+    }
+
+    // 4. Filter by Features
+    const checkedFeatures = Array.from(document.querySelectorAll('#filter-features input:checked')).map(cb => cb.value.toLowerCase());
+    if (checkedFeatures.length > 0) {
+        productsToRender = productsToRender.filter(p => checkedFeatures.some(feature => p.description.toLowerCase().includes(feature) || p.name.toLowerCase().includes(feature)));
+    }
+
+    // 5. Filter by Price Range
+    const priceRadio = document.querySelector('input[name="price"]:checked');
+    if (priceRadio && priceRadio.value !== 'all') {
+        const val = priceRadio.value;
+        if (val === 'under50') productsToRender = productsToRender.filter(p => p.price < 50);
+        else if (val === '50-200') productsToRender = productsToRender.filter(p => p.price >= 50 && p.price <= 200);
+        else if (val === 'over200') productsToRender = productsToRender.filter(p => p.price > 200);
     }
 
     // Update breadcrumb visually
@@ -67,40 +100,62 @@ function renderProducts(categoryKey, searchQuery = null) {
         return;
     }
 
-    resultsCount.textContent = `${productsToRender.length} items found`;
+    resultsCount.textContent = `Loading...`;
 
-    productsToRender.forEach(prod => {
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        card.innerHTML = `
-            <div class="product-img-wrapper">
-                <img src="${prod.img}" alt="${prod.name}">
-                <button class="add-cart-btn">Add to Cart</button>
-            </div>
+    // 1. Render Skeletons
+    for (let i = 0; i < 8; i++) {
+        const skeletonNode = document.createElement('div');
+        skeletonNode.className = 'product-card skeleton-card';
+        skeletonNode.innerHTML = `
+            <div class="skeleton skeleton-img"></div>
             <div class="product-info">
-                <a href="details.html?id=${prod.id}" class="product-title">${prod.name}</a>
-                <div class="product-rating">
-                    ★★★★★ <span>${prod.rating} (${prod.reviews})</span>
-                </div>
-                <div class="product-price">$${prod.price.toLocaleString()}</div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text short"></div>
+                <div class="skeleton skeleton-text price"></div>
             </div>
         `;
+        productGrid.appendChild(skeletonNode);
+    }
 
-        // Wire up Add to Cart button
-        const addBtn = card.querySelector('.add-cart-btn');
-        addBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            CartStore.addItem(prod, 1);
-            addBtn.textContent = 'Added ✓';
-            addBtn.style.background = '#16a34a';
-            setTimeout(() => {
-                addBtn.textContent = 'Add to Cart';
-                addBtn.style.background = '';
-            }, 1500);
+    // 2. Render real products after simulated delay
+    setTimeout(() => {
+        productGrid.innerHTML = '';
+        resultsCount.textContent = `${productsToRender.length} items found`;
+
+        productsToRender.forEach(prod => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <div class="product-img-wrapper">
+                    <img src="${prod.img}" alt="${prod.name}">
+                    <button class="add-cart-btn">Add to Cart</button>
+                </div>
+                <div class="product-info">
+                    <a href="details.html?id=${prod.id}" class="product-title">${prod.name}</a>
+                    <div class="product-rating">
+                        ★★★★★ <span>${prod.rating} (${prod.reviews})</span>
+                    </div>
+                    <div class="product-price">$${prod.price.toLocaleString()}</div>
+                </div>
+            `;
+
+            // Wire up Add to Cart button
+            const addBtn = card.querySelector('.add-cart-btn');
+            addBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                CartStore.addItem(prod, 1);
+                addBtn.textContent = 'Added ✓';
+                addBtn.style.background = '#16a34a';
+                if (window.showToast) window.showToast('Item added to cart', 'success');
+                setTimeout(() => {
+                    addBtn.textContent = 'Add to Cart';
+                    addBtn.style.background = '';
+                }, 1500);
+            });
+
+            productGrid.appendChild(card);
         });
-
-        productGrid.appendChild(card);
-    });
+    }, 800); // 800ms delay for skeleton effect
 }
 
 function loadCategory(categoryKey, searchQuery = null) {
@@ -149,13 +204,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tab clicks
     categoryTabs.forEach(tab => {
         tab.addEventListener('click', (e) => {
-            // Remove active class from all
             categoryTabs.forEach(t => t.classList.remove('active'));
-            // Add to clicked
             e.target.classList.add('active');
             
-            // Load new category
-            loadCategory(e.target.dataset.cat);
+            // clear checkboxes recursively for new category
+            const inputs = document.querySelectorAll('#filter-brands input, #filter-features input');
+            inputs.forEach(input => input.checked = false);
+            
+            loadCategory(e.target.dataset.cat, currentSearchQuery);
+        });
+    });
+
+    // Price Radio filters
+    document.querySelectorAll('input[name="price"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+            const activeTab = document.querySelector('.cat-btn.active');
+            let currentCat = activeTab ? activeTab.dataset.cat : 'all';
+            renderProducts(currentCat, currentSearchQuery);
         });
     });
 

@@ -149,7 +149,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (checkoutBtn) {
         checkoutBtn.addEventListener('click', () => {
             if (CartStore.getCount() === 0) return;
-            alert('🎉 Order placed successfully! Thank you for shopping with us.');
+            if (window.showToast) {
+                showToast('Order placed successfully! Thank you for shopping with us.', 'success');
+            } else {
+                alert('🎉 Order placed successfully! Thank you for shopping with us.');
+            }
             CartStore.clear();
             appliedDiscount = 0;
             renderCart();

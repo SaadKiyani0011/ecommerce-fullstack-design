@@ -34,6 +34,32 @@ document.addEventListener('DOMContentLoaded', () => {
         // Ensure main image
         mainImg.src = product.img;
 
+        // Image Hover Zoom Logic
+        const mainImgWrapper = document.querySelector('.main-image-wrapper');
+        if (mainImgWrapper && mainImg) {
+            mainImgWrapper.addEventListener('mousemove', (e) => {
+                const rect = mainImgWrapper.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const xPercent = (x / rect.width) * 100;
+                const yPercent = (y / rect.height) * 100;
+                mainImg.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+            });
+            
+            mainImgWrapper.addEventListener('mouseenter', () => {
+                mainImgWrapper.classList.add('zoomed');
+            });
+            
+            mainImgWrapper.addEventListener('mouseleave', () => {
+                mainImgWrapper.classList.remove('zoomed');
+                setTimeout(() => {
+                    if(!mainImgWrapper.classList.contains('zoomed')) {
+                       mainImg.style.transformOrigin = 'center center';
+                    }
+                }, 100);
+            });
+        }
+
         // Render thumbnails
         if(product.gallery && product.gallery.length > 0) {
             product.gallery.forEach((url, index) => {
@@ -121,6 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const originalText = addCartBtn.textContent;
             addCartBtn.textContent = `✓ Added to Cart (${qty})`;
             addCartBtn.style.background = '#16a34a';
+            if (window.showToast) showToast(`Added ${qty} item(s) to your cart!`, 'success');
             setTimeout(() => {
                 addCartBtn.textContent = originalText;
                 addCartBtn.style.background = '';

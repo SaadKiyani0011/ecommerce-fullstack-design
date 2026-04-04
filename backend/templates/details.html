@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{% static 'assets/css/listing.css' %}"> <!-- For breadcrumbs/general -->
     <link rel="stylesheet" href="{% static 'assets/css/details.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/toast.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="{% static 'assets/Logo/LOGO.png' %}" type="image/x-icon">
 
@@ -37,15 +38,26 @@
             <!-- Theme Toggle -->
             <button id="theme-toggle" class="theme-toggle-btn">🌙 Dark Mode</button>
 
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="action-item" onclick="return confirm('Are you sure you want to logout?');">
+                <span class="icon" style="color: #ef4444;">🚪</span>
+                <span class="label" style="color: #ef4444;">Logout</span>
+            </a>
+            <a href="#" class="action-item">
+                <span class="icon">👤</span>
+                <span class="label" style="font-weight: 600;">{{ request.user.first_name|default:request.user.username }}</span>
+            </a>
+            {% else %}
             <a href="login.html" class="action-item">
                 <span class="icon">👤</span>
                 <span class="label">Profile</span>
             </a>
-            <a href="#" class="action-item" onclick="alert('Messages feature coming soon!')">
+            {% endif %}
+            <a href="#" class="action-item" onclick="showToast('Messages feature coming soon!', 'info')">
                 <span class="icon">💬</span>
                 <span class="label">Message</span>
             </a>
-            <a href="#" class="action-item" onclick="alert('Orders feature coming soon!')">
+            <a href="#" class="action-item" onclick="showToast('Orders feature coming soon!', 'info')">
                 <span class="icon">❤️</span>
                 <span class="label">Orders</span>
             </a>
@@ -274,8 +286,12 @@
 
     <!-- Essential Scripts -->
     <script src="{% static 'assets/js/search.js' %}"></script>
+    <script src="{% static 'assets/js/toast.js' %}"></script>
     <script src="{% static 'assets/js/cart-store.js' %}"></script>
-    <script src="{% static 'assets/js/db.js' %}"></script>
+    {{ db_data|json_script:"db-json-data" }}
+    <script>
+        window.productDatabase = JSON.parse(document.getElementById('db-json-data').textContent);
+    </script>
     <script src="{% static 'assets/js/details.js' %}"></script>
 </body>
 

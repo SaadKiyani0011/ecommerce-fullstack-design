@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             msg.textContent = 'Account created successfully! Redirecting...';
             msg.style.color = '#16a34a';
+            if (window.showToast) showToast('Account created successfully!', 'success');
 
             setTimeout(() => {
                 window.location.href = 'home.html';
@@ -65,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             msg.textContent = 'Login successful! Redirecting...';
             msg.style.color = '#16a34a';
+            if (window.showToast) showToast('Login successful!', 'success');
 
             setTimeout(() => {
                 window.location.href = 'home.html';
