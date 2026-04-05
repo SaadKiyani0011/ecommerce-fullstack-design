@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Your Shopping Cart - KIYANI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'assets/css/cart.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="cart-page">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 class="page-title" id="cart-page-title" style="margin-bottom: 0;">My cart</h2>
+        <div style="font-size: 14px; color: var(--secondary-text);">Step 1 of 3: Review Cart</div>
+    </div>
+
+    <div class="cart-layout">
+        <!-- Left: Dynamic Items List -->
+        <section class="cart-items-section">
+
+            <!-- Dynamic cart items rendered by cart.js -->
+            <div id="cart-items-container">
+                <!-- Skeleton loader for cart items -->
+                <div class="skeleton" style="height: 100px; width: 100%; margin-bottom: 15px; border-radius: 8px;"></div>
+                <div class="skeleton" style="height: 100px; width: 100%; margin-bottom: 15px; border-radius: 8px;"></div>
+            </div>
+
+            <!-- Empty Cart State -->
+            <div id="empty-cart-msg" style="display:none; text-align:center; padding: 60px 20px; background: var(--card-bg); border-radius: 12px; border: 1px dashed var(--border-color);">
+                <div style="font-size: 64px; margin-bottom: 16px;">🛍️</div>
+                <h3 style="margin-bottom: 10px; color: var(--text-color);">Your cart is feeling light</h3>
+                <p style="color: var(--secondary-text); margin-bottom: 24px;">Explore our trending products and find something you love!</p>
+                <button onclick="window.location.href='/listing/'"
+                    style="background:var(--primary-color); color:white; padding: 14px 32px; border-radius:8px; font-weight:600; border:none; cursor:pointer; font-size:15px; transition: transform 0.2s;">
+                    Discover Products
+                </button>
+            </div>
+
+            <!-- Footer Actions -->
+            <div class="cart-footer-actions" id="cart-footer-actions" style="display:none; margin-top: 20px;">
+                <button class="back-shop-btn" onclick="window.location.href='/listing/'" style="display: flex; align-items: center; gap: 8px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    Continue Shopping
+                </button>
+                <button class="remove-all-btn" id="clear-cart-btn" style="color: #ef4444; background: none; border: 1px solid #fee2e2; padding: 8px 16px; border-radius: 6px;">
+                    Empty Cart
+                </button>
+            </div>
+        </section>
+
+        <!-- Right: Checkout Sidebar -->
+        <aside class="checkout-sidebar" id="checkout-sidebar" style="display:none;">
+            <div class="coupon-box" style="margin-bottom: 20px;">
+                <p style="font-weight: 600; margin-bottom: 12px;">Promo Code</p>
+                <div class="coupon-input">
+                    <input type="text" id="coupon-input" placeholder="Enter code">
+                    <button id="coupon-apply-btn">Apply</button>
+                </div>
+                <p id="coupon-msg" style="font-size:13px; margin-top:6px;"></p>
+            </div>
+
+            <div class="summary-box" style="box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: none;">
+                <h4 style="margin-bottom: 20px; font-size: 18px;">Order Summary</h4>
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span class="subtotal-val" id="subtotal-val">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Discount:</span>
+                    <span class="discount-val text-danger" id="discount-val">- $0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Estimated Tax (5%):</span>
+                    <span class="tax-val text-success" id="tax-val">+ $0.00</span>
+                </div>
+                <hr style="margin: 15px 0; border: none; border-top: 1px solid var(--border-color);">
+                <div class="summary-row total-row" style="margin-bottom: 25px;">
+                    <span style="font-size: 20px;">Total:</span>
+                    <span class="total-val" id="total-val" style="font-size: 24px; color: var(--primary-color);">$0.00</span>
+                </div>
+                <button class="checkout-btn" id="checkout-btn" style="width: 100%; padding: 18px; font-size: 16px; border-radius: 12px; transition: all 0.3s;">
+                    Proceed to Checkout
+                </button>
+
+                <div class="f-info" style="margin-top: 20px; font-size: 12px; color: var(--secondary-text); text-align: center;">
+                    🔒 Secure SSL Encrypted Checkout
+                </div>
+
+                <div class="footer-payment" style="margin-top:16px; justify-content:center; opacity: 0.7;">
+                    <span class="payment-badge">VISA</span>
+                    <span class="payment-badge">Master</span>
+                    <span class="payment-badge">PayPal</span>
+                </div>
+            </div>
+        </aside>
+    </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'assets/js/db.js' %}"></script>
+<script src="{% static 'assets/js/cart.js' %}"></script>
+{% endblock %}

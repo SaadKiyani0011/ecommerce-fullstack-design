@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Product Details - KIYANI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'assets/css/details.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/listing.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="details-main" id="main-content">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb" style="margin-bottom: 30px;">
+        <a href="{% url 'home' %}">Home</a> <span class="divider">></span>
+        <a href="{% url 'listing' %}" id="bc-category">Category</a> <span class="divider">></span>
+        <span id="bc-title" style="color: var(--text-color); font-weight: 500;">Product</span>
+    </div>
+
+    <!-- 50/50 CSS Grid Layout -->
+    <div class="product-split">
+
+        <!-- Left: Image Gallery -->
+        <div class="gallery-section">
+            <div class="main-image-wrapper">
+                <div id="main-img-skeleton" class="skeleton" style="width: 100%; height: 400px; position: absolute; z-index: 5;"></div>
+                <img id="main-img" src="" alt="Product" onload="document.getElementById('main-img-skeleton').style.display='none'">
+            </div>
+            <div class="thumbnail-row" id="thumbnail-row">
+                <!-- Thumbnails populated by JS -->
+            </div>
+        </div>
+
+        <!-- Right: Product Information -->
+        <div class="info-section">
+            <!-- Status tag -->
+            <div class="stock-status">✓ IN STOCK</div>
+
+            <h1 class="product-title" id="product-title">
+                <div class="skeleton" style="height: 40px; width: 100%;"></div>
+            </h1>
+
+            <div class="rating-row">
+                <span class="stars">★★★★★</span>
+                <span class="rating-score" id="product-rating">4.5</span>
+                <span class="reviews-count" id="product-reviews">(0 reviews)</span>
+            </div>
+
+            <div class="price-row">
+                <span class="current-price" id="product-price">$0.00</span>
+                <span class="old-price" id="product-old-price"></span>
+            </div>
+
+            <p class="product-description" id="product-desc">
+                Loading product features and specifications...
+                <div class="skeleton" style="height: 15px; width: 100%; margin: 5px 0;"></div>
+                <div class="skeleton" style="height: 15px; width: 90%; margin: 5px 0;"></div>
+            </p>
+
+            <hr class="divider">
+
+            <!-- Dynamic Variant Selectors -->
+            <div class="variant-area">
+                <div class="variant-label">Colors:</div>
+                <div class="color-options" id="color-options"></div>
+            </div>
+
+            <div class="variant-area">
+                <div class="variant-label">Options/Sizes:</div>
+                <div class="size-options" id="size-options"></div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- Action Button Row -->
+            <div class="action-row">
+                <div class="quantity-picker">
+                    <button id="qty-minus">-</button>
+                    <input type="text" id="qty-input" value="1" readonly>
+                    <button id="qty-plus">+</button>
+                </div>
+
+                <button class="add-to-cart-btn" id="add-cart">Add to cart</button>
+                <button class="wishlist-btn" title="Save for later" onclick="toggleWishlist(this)">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Extra meta info like shipping -->
+            <div class="store-meta">
+                <div class="meta-item">🏙️ Ships from Global store</div>
+                <div class="meta-item">🛡️ 1 Year Brand Warranty</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Information Tabs -->
+    <div class="product-tabs-section">
+        <div class="tabs-header">
+            <button class="tab-btn active">Description</button>
+            <button class="tab-btn">Reviews</button>
+            <button class="tab-btn">Shipping</button>
+        </div>
+        <div class="tab-content" style="padding: 25px;">
+            <p id="full-description" style="line-height: 1.6; color: var(--secondary-text);">Complete details will
+                load here...</p>
+        </div>
+    </div>
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'assets/js/db.js' %}"></script>
+<script src="{% static 'assets/js/details.js' %}"></script>
+<script>
+    function toggleWishlist(btn) {
+        btn.classList.toggle('active');
+        const isAdded = btn.classList.contains('active');
+        const icon = btn.querySelector('svg');
+        if(isAdded) {
+            icon.style.fill = '#ef4444';
+            icon.style.stroke = '#ef4444';
+            showToast('Added to wishlist! ❤️', 'success');
+        } else {
+            icon.style.fill = 'none';
+            icon.style.stroke = 'currentColor';
+            showToast('Removed from wishlist.', 'info');
+        }
+    }
+</script>
+{% endblock %}

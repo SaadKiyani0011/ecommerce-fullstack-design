@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Sign Up - KIYANI</title>
+    <link rel="stylesheet" href="{% static 'assets/css/login.css' %}">
+    <link rel="shortcut icon" href="{% static 'assets/Logo/LOGO.png' %}" type="image/x-icon">
+</head>
+<body>
+    <!-- Back to Home Button -->
+    <a href="{% url 'home' %}" class="back-home-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back to Home
+    </a>
+
+    <div class="container" id="container">
+        <!-- Sign Up Form -->
+        <div class="form-container sign-up-container">
+            <form action="{% url 'signup' %}" method="POST" id="signUpForm">
+                {% csrf_token %}
+                <div class="form-header">
+                    <h1>Create Account</h1>
+                    <p>Join our community today for exclusive deals</p>
+                </div>
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Username" required />
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Password" required />
+                </div>
+                <!-- Standard Django UserCreationForm needs username and password -->
+                <button type="submit" class="action-btn">Sign Up</button>
+                <p id="signup-msg" style="font-size: 13px; margin-top: 10px;"></p>
+            </form>
+        </div>
+
+        <!-- Sign In Form -->
+        <div class="form-container sign-in-container">
+            <form action="{% url 'login' %}" method="POST" id="signInForm">
+                {% csrf_token %}
+                <div class="form-header">
+                    <h1>Sign In</h1>
+                    <p>Access your personal dashboard</p>
+                </div>
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Username" required />
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Password" required />
+                </div>
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox"> Remember me
+                    </label>
+                    <a href="#" class="forgot-pwd">Forgot your password?</a>
+                </div>
+                <button type="submit" class="action-btn">Sign In</button>
+                <p id="signin-msg" style="font-size: 13px; margin-top: 10px;"></p>
+            </form>
+        </div>
+
+        <!-- Overlay Container -->
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Welcome Back!</h1>
+                    <p>To keep connected with us please login with your personal info</p>
+                    <button class="ghost" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Enter your personal details and start journey with us</p>
+                    <button class="ghost" id="signUp">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Essential Javascript -->
+    <script src="{% static 'assets/js/login.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Explore Products - KIYANI Store{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'assets/css/listing.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- 3. LISTING MAIN CONTENT -->
+<main class="listing-main">
+
+    <!-- Top Bar (Breadcrumb & Category Switcher Demo) -->
+    <div class="listing-top-bar">
+        <div class="breadcrumb">
+            <a href="{% url 'home' %}">Home</a> <span class="divider">></span> <span id="breadcrumb-category">Electronics &
+                Tech</span>
+        </div>
+
+        <div class="category-tabs" id="category-tabs">
+            <button class="cat-btn active" data-cat="electronics">Electronics</button>
+            <button class="cat-btn" data-cat="automobile">Automobiles</button>
+            <button class="cat-btn" data-cat="clothing">Clothing</button>
+            <button class="cat-btn" data-cat="home">Home Interiors</button>
+        </div>
+    </div>
+
+    <div class="listing-layout">
+        <!-- Left Sidebar: Filters -->
+        <aside class="filter-sidebar">
+
+            <div class="filter-group">
+                <h4>Brands</h4>
+                <div id="filter-brands" class="filter-options">
+                    <!-- Skeleton effect while loading -->
+                    <div class="skeleton" style="height: 20px; width: 100%; margin-bottom: 5px;"></div>
+                    <div class="skeleton" style="height: 20px; width: 100%; margin-bottom: 5px;"></div>
+                    <div class="skeleton" style="height: 20px; width: 100%; margin-bottom: 5px;"></div>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Features</h4>
+                <div id="filter-features" class="filter-options">
+                    <div class="skeleton" style="height: 20px; width: 100%; margin-bottom: 5px;"></div>
+                    <div class="skeleton" style="height: 20px; width: 100%; margin-bottom: 5px;"></div>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Price Range</h4>
+                <div class="filter-options">
+                    <label class="custom-radio">
+                        <input type="radio" name="price" value="all" checked>
+                        <span>All Prices</span>
+                    </label>
+                    <label class="custom-radio">
+                        <input type="radio" name="price" value="under50">
+                        <span>Under $50</span>
+                    </label>
+                    <label class="custom-radio">
+                        <input type="radio" name="price" value="50-200">
+                        <span>$50 - $200</span>
+                    </label>
+                    <label class="custom-radio">
+                        <input type="radio" name="price" value="over200">
+                        <span>Over $200</span>
+                    </label>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Area: Product Grid -->
+        <section class="products-section">
+            <!-- Controls -->
+            <div class="grid-controls">
+                <div class="results-count" id="results-count">0 items found</div>
+                <div class="view-options">
+                    <label>Sort by:</label>
+                    <select class="sort-select">
+                        <option>Best Match</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="product-grid" id="product-grid">
+                <!-- Skeleton cards for professional loading feel -->
+                {% for i in "123456" %}
+                <div class="product-card skeleton-card">
+                    <div class="skeleton" style="height: 200px; width: 100%;"></div>
+                    <div style="padding: 15px;">
+                        <div class="skeleton" style="height: 20px; width: 80%; margin-bottom: 10px;"></div>
+                        <div class="skeleton" style="height: 25px; width: 40%;"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="page-btn disabled">Previous</button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">Next</button>
+            </div>
+
+        </section>
+    </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'assets/js/db.js' %}"></script>
+<script src="{% static 'assets/js/listing.js' %}"></script>
+{% endblock %}
