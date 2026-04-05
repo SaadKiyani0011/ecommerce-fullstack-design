@@ -27,8 +27,21 @@ def api_products(request):
                 'variants': { 'sizes': [], 'colors': [] } # Placeholder variants
             })
             
+        # Dummy brands and features for the filters based on category
+        brands = ["Apple", "Samsung", "Sony"] if cat.slug == 'electronics' else \
+                 ["Toyota", "Honda", "Ford"] if cat.slug == 'automobile' else \
+                 ["Nike", "Adidas", "Gucci"] if cat.slug == 'clothing' else \
+                 ["IKEA", "HomePlus", "DecorArt"]
+                 
+        features = ["Wireless", "Bluetooth"] if cat.slug == 'electronics' else \
+                   ["Automatic", "Hybrid"] if cat.slug == 'automobile' else \
+                   ["Cotton", "Polyester"] if cat.slug == 'clothing' else \
+                   ["Wooden", "Plastic", "Metal"]
+
         db_structure[cat.slug] = {
             'title': cat.name,
+            'brands': brands,
+            'features': features,
             'products': products
         }
         

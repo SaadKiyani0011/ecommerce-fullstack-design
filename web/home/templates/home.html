@@ -63,7 +63,7 @@
 <section class="deals-offers-section">
     <div class="deals-info">
         <h3>Deals and offers</h3>
-        <p>Hygiene equipments</p>
+        <p>Latest Tech & Gadgets</p>
         <div class="countdown-timer">
             <div class="time-box"><span class="number">04</span><span class="text">Days</span></div>
             <div class="time-box"><span class="number">13</span><span class="text">Hour</span></div>
@@ -72,102 +72,51 @@
         </div>
     </div>
     <div class="deals-products">
-        <div class="deal-card">
-            <img src="https://ronin.pk/cdn/shop/articles/r02-3-4_thumbnail.jpg?v=1699016877"
-                alt="Smart watches">
-            <p>Smart watches</p>
-            <span class="discount-badge">-25%</span>
-        </div>
-        <div class="deal-card">
-            <img src="https://primetraders.pk/wp-content/uploads/2026/01/image-2.png" alt="Laptops">
-            <p>Laptops</p>
+        {% for product in deals %}
+        <a href="{% url 'detail' %}?id={{ product.id }}" class="deal-card">
+            <img src="{{ product.image_url }}" alt="{{ product.name }}">
+            <p>{{ product.name|truncatechars:15 }}</p>
             <span class="discount-badge">-15%</span>
-        </div>
-        <div class="deal-card">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyemwbXZOtygh1r1CGYB-fShwO4OvgIrYR3Q&s"
-                alt="GoPro cameras">
-            <p>GoPro cameras</p>
-            <span class="discount-badge">-40%</span>
-        </div>
-        <div class="deal-card">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrohOhp4gI01VMTVl0yZGbK9eDRn1OgV8pEg&s"
-                alt="Headphones">
-            <p>Headphones</p>
-            <span class="discount-badge">-25%</span>
-        </div>
-        <div class="deal-card">
-            <img src="https://m-cdn.phonearena.com/images/article/64576-wide-two_1200/The-Best-Phones-My-top-picks-tried-and-tested.jpg"
-                alt="Phones">
-            <p>Phones</p>
-            <span class="discount-badge">-25%</span>
-        </div>
+        </a>
+        {% endfor %}
     </div>
 </section>
 
 <!-- 5. HOME AND OUTDOOR CATEGORY BLOCK -->
 <section class="category-grid-block">
-    <div class="category-main-banner" style="background-image: url('home-outdoor-bg.png');">
+    <div class="category-main-banner" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://plus.unsplash.com/premium_photo-1670984939096-f3cfd48c7408?q=80&w=400&auto=format&fit=crop') center/cover;">
         <h3>Home and outdoor</h3>
-        <button class="source-now-btn">Source now</button>
+        <a href="{% url 'listing' %}?cat=home" class="source-now-btn">Source now</a>
     </div>
     <div class="category-items-grid">
-        <div class="grid-item">
-            <h4>Soft chairs</h4>
-            <span class="price">From USD 19</span>
-            <img src="https://renome.pk/wp-content/uploads/2025/11/Plushora-Sofa-Chair-3-1024x681.jpg"
-                alt="Soft chairs">
-        </div>
-        <div class="grid-item">
-            <h4>Sofa & chair</h4>
-            <span class="price">From USD 19</span>
-            <img src="https://poshish.pk/cdn/shop/files/IMG_5891_1800x1800.webp?v=1723288348"
-                alt="Sofa & chair">
-        </div>
-        <div class="grid-item">
-            <h4>Kitchen mixer</h4>
-            <span class="price">From USD 19</span>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQW01lsHA30hJqe7pJwMmEjwmHPOla6Pn_SA&s"
-                alt="Kitchen mixer">
-        </div>
-        <div class="grid-item">
-            <h4>Blenders</h4>
-            <span class="price">From USD 19</span>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEsqfoaKbmRjErg90s50ecAV2UFInqsyn4KA&s"
-                alt="Blenders">
-        </div>
+        {% for product in home_products %}
+        <a href="{% url 'detail' %}?id={{ product.id }}" class="grid-item">
+            <h4>{{ product.name|truncatechars:15 }}</h4>
+            <span class="price">From USD {{ product.price }}</span>
+            <img src="{{ product.image_url }}" alt="{{ product.name }}">
+        </a>
+        {% empty %}
+            <p style="padding: 20px; color: var(--secondary-text);">No home items found.</p>
+        {% endfor %}
     </div>
 </section>
 
 <!-- 6. CONSUMER ELECTRONICS AND GADGETS BLOCK -->
 <section class="category-grid-block">
-    <div class="category-main-banner" style="background-image: url('consumer-electronics-bg.png');">
+    <div class="category-main-banner" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&w=400&q=80') center/cover;">
         <h3>Consumer electronics and gadgets</h3>
-        <button class="source-now-btn">Source now</button>
+        <a href="{% url 'listing' %}?cat=electronics" class="source-now-btn">Source now</a>
     </div>
     <div class="category-items-grid">
-        <div class="grid-item">
-            <h4>Smart watches</h4>
-            <span class="price">From USD 19</span>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBB-k00lBy0s-LBiui0GSeKaWdm__iaFXozQ&s"
-                alt="Smart watches">
-        </div>
-        <div class="grid-item">
-            <h4>Cameras</h4>
-            <span class="price">From USD 19</span>
-            <img src="https://cdn.mos.cms.futurecdn.net/GXHa4PWwDPx7tGQG9MDQvK.jpg" alt="Cameras">
-        </div>
-        <div class="grid-item">
-            <h4>Headphones</h4>
-            <span class="price">From USD 19</span>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUVkGTZFKBdhD1pyFx-2SHavPUhVnc-dYFgA&s"
-                alt="Headphones">
-        </div>
-        <div class="grid-item">
-            <h4>Smartphones</h4>
-            <span class="price">From USD 19</span>
-            <img src="https://cdn.thewirecutter.com/wp-content/media/2025/11/BEST-SMART-PHONES-3x2-1.jpg?auto=webp&quality=75&crop=3:2&width=1024"
-                alt="Smartphones">
-        </div>
+        {% for product in electronics_products %}
+        <a href="{% url 'detail' %}?id={{ product.id }}" class="grid-item">
+            <h4>{{ product.name|truncatechars:15 }}</h4>
+            <span class="price">From USD {{ product.price }}</span>
+            <img src="{{ product.image_url }}" alt="{{ product.name }}">
+        </a>
+        {% empty %}
+            <p style="padding: 20px; color: var(--secondary-text);">No electronic items found.</p>
+        {% endfor %}
     </div>
 </section>
 
@@ -198,45 +147,15 @@
 <section class="recommended-section">
     <h3>Recommended items</h3>
     <div class="recommended-grid">
-        <div class="recommended-card">
-            <img src="https://teetall.pk/cdn/shop/files/Screenshot-2024-06-01-15-21-20-225_com.android.chrome-edit.jpg?crop=center&height=1629&v=1717285721&width=1220"
-                alt="T-shirts">
+        {% for product in recommended %}
+        <a href="{% url 'detail' %}?id={{ product.id }}" class="recommended-card">
+            <img src="{{ product.image_url }}" alt="{{ product.name }}">
             <div class="product-details">
-                <span class="price">$10.30</span>
-                <p class="desc">T-shirts with multiple colors, for men</p>
+                <span class="price">${{ product.price }}</span>
+                <p class="desc">{{ product.name|truncatechars:30 }}</p>
             </div>
-        </div>
-        <div class="recommended-card">
-            <img src="https://www.thejacketmaker.pk/cdn/shop/files/Leather_Jackets_2048x.webp?v=1693201393"
-                alt="Jacket">
-            <div class="product-details">
-                <span class="price">$10.30</span>
-                <p class="desc">Jeans shorts for men blue color</p>
-            </div>
-        </div>
-        <div class="recommended-card">
-            <img src="https://www.mysuittailor.com/cdn/shop/files/NY_Grey_Suit-upload.jpg?v=1753165727"
-                alt="Suit">
-            <div class="product-details">
-                <span class="price">$12.50</span>
-                <p class="desc">Brown winter coat medium size</p>
-            </div>
-        </div>
-        <div class="recommended-card">
-            <img src="https://i.ytimg.com/vi/GUHg_E4j84U/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBEWntaoEx1okc2_6_i_emRhMVi1Q"
-                alt="Wallet">
-            <div class="product-details">
-                <span class="price">$34.00</span>
-                <p class="desc">Jeans bag for travel for men</p>
-            </div>
-        </div>
-        <div class="recommended-card">
-            <img src="https://urbanforest.co.in/cdn/shop/files/A7402041.jpg?v=1733571068" alt="Bag">
-            <div class="product-details">
-                <span class="price">$9.99</span>
-                <p class="desc">Leather wallet</p>
-            </div>
-        </div>
+        </a>
+        {% endfor %}
     </div>
 </section>
 {% endblock %}
